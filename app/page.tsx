@@ -158,6 +158,8 @@ const services = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
   const gridRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const [aboutVisible, setAboutVisible] = useState(false);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -176,6 +178,24 @@ export default function Home() {
 
     grid.addEventListener("mousemove", handleMouseMove);
     return () => grid.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const section = aboutRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAboutVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -334,19 +354,30 @@ export default function Home() {
         </section>
 
         {/* ── ABOUT ─────────────────────────────────────────────────────────── */}
-        <section id="about" className="vt-about-section">
+        <section
+          id="about"
+          ref={aboutRef}
+          className={`vt-about-section ${aboutVisible ? "is-visible" : ""}`}
+        >
           <div className="vt-about">
-            <p className="vt-section-label vt-about-label">About Us</p>
-            <h2 className="vt-h2 vt-h2-white">
-              Collaborative{" "}
-              <span className="vt-h2-ital">Transformation</span>
-            </h2>
-            <p className="vt-about-tagline">
-              We believe that innovation is achieved through the right combination
-              of meaningful relationships and technology.
-            </p>
-            <div className="vt-about-grid">
-              <div>
+            <div className="vt-about-frame">
+              <span className="vt-about-orb vt-about-orb-left" aria-hidden="true" />
+              <span className="vt-about-orb vt-about-orb-right" aria-hidden="true" />
+
+              <div className="vt-about-header">
+                <p className="vt-section-label vt-about-label">About Us</p>
+                <h2 className="vt-h2 vt-h2-white">
+                  Collaborative{" "}
+                  <span className="vt-h2-ital">Transformation</span>
+                </h2>
+                <p className="vt-about-tagline">
+                  We believe that innovation is achieved through the right combination
+                  of meaningful relationships and technology.
+                </p>
+              </div>
+
+              <div className="vt-about-grid">
+                <div className="vt-about-story">
                 <p className="vt-about-copy">
                   <strong className="vt-about-strong">Venmer Tech LLC</strong> is dedicated to achieve
                   client's organizational goals through the most effective use of Information Technology
@@ -357,18 +388,23 @@ export default function Home() {
                   any client, anywhere across the globe.
                 </p>
                 <button className="vt-btn-outline-white" onClick={() => scrollTo("#contact")}>Work With Us →</button>
-              </div>
-              <div className="vt-pillars">
-                {[
-                  ["Innovation", "Innovation is the key to continued growth and relevance in the marketplace. At Venmer Tech, We listen, learn, and seek out the best ideas. We attack complacency and continually improve."],
-                  ["Quality", "Doing it right the first time — every time, Pace-setting and Innovative. Always striving to find a better way. We monitor and measure all parts of our business."],
-                  ["Teamwork", "Communicate and collaborate to succeed. We believe teamwork empowers our individual strengths and that working together as a team helps us exceed expectations."],
-                ].map(([t, d]) => (
-                  <div key={t} className="vt-pillar">
-                    <div className="vt-pillar-title">{t}</div>
-                    <div className="vt-pillar-desc">{d}</div>
-                  </div>
-                ))}
+                </div>
+                <div className="vt-pillars">
+                  {[
+                    ["Innovation", "Innovation is the key to continued growth and relevance in the marketplace. At Venmer Tech, We listen, learn, and seek out the best ideas. We attack complacency and continually improve."],
+                    ["Quality", "Doing it right the first time — every time, Pace-setting and Innovative. Always striving to find a better way. We monitor and measure all parts of our business."],
+                    ["Teamwork", "Communicate and collaborate to succeed. We believe teamwork empowers our individual strengths and that working together as a team helps us exceed expectations."],
+                  ].map(([t, d], index) => (
+                    <article
+                      key={t}
+                      className="vt-pillar"
+                      style={{ transitionDelay: `${index * 120}ms` }}
+                    >
+                      <div className="vt-pillar-title">{t}</div>
+                      <div className="vt-pillar-desc">{d}</div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
