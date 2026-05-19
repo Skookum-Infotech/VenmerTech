@@ -373,7 +373,7 @@ export default function Home() {
             <div className="vt-map">
               <iframe
                 title="Office"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.2!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858080b7e3d7c5%3A0x0!2sSan+Francisco%2C+CA+94105!5e0!3m2!1sen!2sus!4v1680000000000!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3464.4!2d-95.4535!3d29.7365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c3e1b1b1b1b1%3A0x0!2s1900+Yorktown+St%2C+Houston%2C+TX+77056!5e0!3m2!1sen!2sus!4v1680000000000"
                 allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
