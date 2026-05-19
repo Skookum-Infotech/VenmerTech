@@ -159,7 +159,9 @@ const services = [
 export default function Home() {
   const gridRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   const [aboutVisible, setAboutVisible] = useState(false);
+  const [contactVisible, setContactVisible] = useState(false);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -192,6 +194,24 @@ export default function Home() {
         }
       },
       { threshold: 0.25 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = contactRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setContactVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.18 }
     );
 
     observer.observe(section);
@@ -411,34 +431,54 @@ export default function Home() {
         </section>
 
         {/* ── CONTACT ───────────────────────────────────────────────────────── */}
-        <section id="contact" style={{ background: "var(--white)", borderTop: "1px solid var(--subtle)" }}>
-          <div className="vt-section">
-            <p className="vt-section-label">Contact</p>
-            <h2 className="vt-h2">Let's start a conversation.</h2>
-            <div className="vt-contact-grid">
-              <ContactForm />
-              <div className="vt-contact-info">
-                {[
-                  { label: "Address", value: "1900 Yorktown St, #508, Houston, TX, 77056", href: undefined },
-                  { label: "Call Us", value: "+1 (940) 263-1641", href: "tel:+19402631641" },
-                  { label: "Email Us", value: "info@cognillc.com", href: "mailto:info@cognillc.com" },
-                ].map(({ label, value, href }) => (
-                  <div key={label} className="vt-info-item">
-                    <div className="vt-info-label">{label}</div>
-                    {href
-                      ? <a href={href} className="vt-info-value">{value}</a>
-                      : <p className="vt-info-value" style={{ whiteSpace: "pre-line" }}>{value}</p>
-                    }
-                  </div>
-                ))}
-              </div>
+        <section
+          id="contact"
+          ref={contactRef}
+          className={`vt-contact-section ${contactVisible ? "is-visible" : ""}`}
+        >
+          <div className="vt-section vt-contact-shell">
+            <div className="vt-contact-header">
+              <p className="vt-section-label">Contact</p>
+              <h2 className="vt-h2">Let's start a conversation.</h2>
             </div>
-            <div className="vt-map">
-              <iframe
-                title="Office"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3464.4!2d-95.4535!3d29.7365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c3e1b1b1b1b1%3A0x0!2s1900+Yorktown+St%2C+Houston%2C+TX+77056!5e0!3m2!1sen!2sus!4v1680000000000"
-                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-              />
+
+            <div className="vt-contact-panel">
+              <div className="vt-contact-grid">
+                <ContactForm />
+                <div className="vt-contact-info">
+                  {[
+                    { label: "Address", value: "1900 Yorktown St, #508, Houston, TX, 77056", href: undefined },
+                    { label: "Call Us", value: "+1 (940) 263-1641", href: "tel:+19402631641" },
+                    { label: "Email Us", value: "info@cognillc.com", href: "mailto:info@cognillc.com" },
+                  ].map(({ label, value, href }, index) => (
+                    <div
+                      key={label}
+                      className="vt-info-item"
+                      style={{ transitionDelay: `${index * 110}ms` }}
+                    >
+                      <div className="vt-info-label">{label}</div>
+                      {href
+                        ? <a href={href} className="vt-info-value">{value}</a>
+                        : <p className="vt-info-value" style={{ whiteSpace: "pre-line" }}>{value}</p>
+                      }
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="vt-map-card">
+                <div className="vt-map-topline">
+                  <span className="vt-map-badge">Office Map</span>
+                  <span className="vt-map-meta">Houston, TX</span>
+                </div>
+                <div className="vt-map">
+                  <iframe
+                    title="Office"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3464.4!2d-95.4535!3d29.7365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c3e1b1b1b1b1%3A0x0!2s1900+Yorktown+St%2C+Houston%2C+TX+77056!5e0!3m2!1sen!2sus!4v1680000000000"
+                    allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
