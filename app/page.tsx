@@ -78,7 +78,7 @@ export default function Home() {
 
             <div className="vt-cinematic-actions">
               <button
-                className="vt-btn-primary"
+                className="vt-btn-hero"
                 onClick={() => scrollTo("#services")}
               >
                 Explore Services
