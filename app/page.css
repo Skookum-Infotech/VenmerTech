@@ -390,11 +390,22 @@ section { scroll-margin-top: 5rem; }
 /* ABOUT (dark) */
 .vt-about-section { background: var(--ink); }
 .vt-about { max-width: 1200px; margin: 0 auto; padding: 7rem 2.5rem; }
+.vt-about-tagline {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-style: italic;
+  color: rgba(255,255,255,0.45);
+  max-width: 58ch;
+  margin-top: 1rem;
+  line-height: 1.6;
+}
 .vt-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 4rem; }
 .vt-about-label { color: rgba(255,255,255,0.35); }
 .vt-about-label::before { background: rgba(255,255,255,0.25); }
 .vt-h2-white { color: var(--white); }
+.vt-h2-ital { font-family: var(--serif); font-style: italic; }
 .vt-about-copy { font-size: 0.9rem; line-height: 1.75; color: rgba(255,255,255,0.55); margin-bottom: 1.25rem; }
+.vt-about-strong { color: var(--white); font-weight: 600; }
 .vt-btn-outline-white {
   font-family: var(--sans); font-size: 0.78rem; font-weight: 600;
   letter-spacing: 0.06em; text-transform: uppercase;
@@ -407,7 +418,15 @@ section { scroll-margin-top: 5rem; }
 .vt-pillar {
   padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.vt-pillar-title { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.35rem; }
+.vt-pillar-title {
+  font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.35rem;
+  position: relative; padding-left: 1.25rem;
+}
+.vt-pillar-title::before {
+  content: "";
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25);
+}
 .vt-pillar-desc  { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
 
 /* WORK */

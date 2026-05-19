@@ -243,26 +243,32 @@ export default function Home() {
         <section id="about" className="vt-about-section">
           <div className="vt-about">
             <p className="vt-section-label vt-about-label">About Us</p>
-            <h2 className="vt-h2 vt-h2-white">Reliable partners in every technology decision.</h2>
+            <h2 className="vt-h2 vt-h2-white">
+              Collaborative{" "}
+              <span className="vt-h2-ital">Transformation</span>
+            </h2>
+            <p className="vt-about-tagline">
+              We believe that innovation is achieved through the right combination
+              of meaningful relationships and technology.
+            </p>
             <div className="vt-about-grid">
               <div>
                 <p className="vt-about-copy">
-                  Founded on the belief that technology should empower—not complicate—Venmer Tech has
-                  spent over a decade simplifying IT for businesses of every size. We combine deep
-                  technical expertise with a clear-eyed focus on your business outcomes.
-                </p>
-                <p className="vt-about-copy">
-                  From startups scaling fast to enterprises modernising legacy infrastructure,
-                  our team of 50+ engineers delivers solutions that are built to last.
+                  <strong className="vt-about-strong">Venmer Tech LLC</strong> is dedicated to achieve
+                  client's organizational goals through the most effective use of Information Technology
+                  and business vertical knowledge. Working as a business partner with you, we plan, prepare
+                  and execute programs with knowledge, experience and follow through while providing solutions
+                  in a timely manner. Our solutions are the outcome of the synergistic contribution of our
+                  most-valued resources. Our depth and breadth of service and global reach equips us to serve
+                  any client, anywhere across the globe.
                 </p>
                 <button className="vt-btn-outline-white" onClick={() => scrollTo("#contact")}>Work With Us →</button>
               </div>
               <div className="vt-pillars">
                 {[
-                  ["Strategic Alignment", "Every solution maps directly to a business goal."],
-                  ["Transparent Process", "No black boxes — clear communication at every stage."],
-                  ["Long-term Partnership", "We grow with you, not just deliver and disappear."],
-                  ["Certified Expertise", "AWS, Azure, GCP, and ISO-certified professionals."],
+                  ["Innovation", "Innovation is the key to continued growth and relevance in the marketplace. At Venmer Tech, We listen, learn, and seek out the best ideas. We attack complacency and continually improve."],
+                  ["Quality", "Doing it right the first time — every time, Pace-setting and Innovative. Always striving to find a better way. We monitor and measure all parts of our business."],
+                  ["Teamwork", "Communicate and collaborate to succeed. We believe teamwork empowers our individual strengths and that working together as a team helps us exceed expectations."],
                 ].map(([t, d]) => (
                   <div key={t} className="vt-pillar">
                     <div className="vt-pillar-title">{t}</div>
