@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { scrollTo } from "./components/nav-data";
@@ -33,8 +33,151 @@ function ContactForm() {
   );
 }
 
+const serviceIcons: Record<string, React.ReactNode> = {
+  code: (
+    <>
+      <path d="M16 14L6 24L16 34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M32 14L42 24L32 34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M28 8L20 40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </>
+  ),
+  tools: (
+    <>
+      <path d="M14 34L22 10L30 34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 26H34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="24" cy="38" r="3" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M24 35V32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </>
+  ),
+  web: (
+    <>
+      <rect x="6" y="8" width="36" height="24" rx="3" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M6 16H42" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M18 32H30" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M24 28V32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      <circle cx="17" cy="12" r="1.5" fill="currentColor"/>
+    </>
+  ),
+  cloud: (
+    <path d="M12 32C7.58172 32 4 28.4183 4 24C4 19.8645 7.14763 16.4643 11.1924 16.0496C12.3086 11.3056 16.5654 8 21.5 8C27.5731 8 32.5 12.9269 32.5 19C32.5 19.3358 32.4843 19.6683 32.4535 20C36.7863 20.5136 40 24.1324 40 28.5C40 33.1944 36.1944 37 31.5 37H12V32Z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+  ),
+  check: (
+    <>
+      <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M15 24L21 30L33 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </>
+  ),
+  people: (
+    <>
+      <circle cx="24" cy="14" r="6" stroke="currentColor" strokeWidth="2.5"/>
+      <path d="M12 36C12 29.3726 17.3726 24 24 24C30.6274 24 36 29.3726 36 36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="10" cy="18" r="4" stroke="currentColor" strokeWidth="2"/>
+      <path d="M4 34C4 30.134 7.13401 27 11 27" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="38" cy="18" r="4" stroke="currentColor" strokeWidth="2"/>
+      <path d="M44 34C44 30.134 40.866 27 37 27" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    </>
+  ),
+};
+
+const services = [
+  {
+    icon: "code",
+    title: "Application Development",
+    description:
+      "Custom business applications engineered to automate operations, streamline workflows, and modernize enterprise systems.",
+    points: [
+      "Custom enterprise applications",
+      "Workflow automation",
+      "System integrations",
+      "Scalable architecture",
+    ],
+  },
+  {
+    icon: "tools",
+    title: "Maintenance & Support",
+    description:
+      "Continuous support and optimization services designed to improve reliability, scalability, and long-term system performance.",
+    points: [
+      "Performance monitoring",
+      "Cloud migration support",
+      "Code audits & reviews",
+      "Troubleshooting & maintenance",
+    ],
+  },
+  {
+    icon: "web",
+    title: "Web Design & Maintenance",
+    description:
+      "Modern responsive web platforms and interactive digital experiences focused on usability, speed, and scalability.",
+    points: [
+      "Responsive web applications",
+      "CMS & ecommerce systems",
+      "UI/UX optimization",
+      "Continuous maintenance",
+    ],
+  },
+  {
+    icon: "cloud",
+    title: "Cloud Services",
+    description:
+      "Secure cloud infrastructure and deployment solutions optimized for enterprise scalability and operational efficiency.",
+    points: [
+      "Hybrid cloud solutions",
+      "Infrastructure optimization",
+      "Secure deployments",
+      "Cloud migration",
+    ],
+  },
+  {
+    icon: "check",
+    title: "Quality Assurance",
+    description:
+      "Automation-driven testing and QA systems ensuring reliability, performance, and faster product delivery cycles.",
+    points: [
+      "Automation testing",
+      "Performance validation",
+      "Agile & DevOps QA",
+      "End-to-end testing",
+    ],
+  },
+  {
+    icon: "people",
+    title: "Talent Acquisition",
+    description:
+      "Strategic staffing and consulting solutions connecting businesses with highly skilled technology professionals.",
+    points: [
+      "Technical staffing",
+      "IT consulting experts",
+      "Rapid team scaling",
+      "Project-based hiring",
+    ],
+  },
+];
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const cards = grid.querySelectorAll<HTMLElement>(".vt-service-card");
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty("--mouse-x", `${x}%`);
+        card.style.setProperty("--mouse-y", `${y}%`);
+      });
+    };
+
+    grid.addEventListener("mousemove", handleMouseMove);
+    return () => grid.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <>
       <Header />
@@ -125,95 +268,22 @@ export default function Home() {
 
             </div>
 
-            <div className="vt-services-grid">
+            <div className="vt-services-grid" ref={gridRef}>
 
-              {[
-                {
-                  number: "01",
-                  title: "Application Development",
-                  description:
-                    "Custom business applications engineered to automate operations, streamline workflows, and modernize enterprise systems.",
-                  points: [
-                    "Custom enterprise applications",
-                    "Workflow automation",
-                    "System integrations",
-                    "Scalable architecture",
-                  ],
-                },
-
-                {
-                  number: "02",
-                  title: "Maintenance & Support",
-                  description:
-                    "Continuous support and optimization services designed to improve reliability, scalability, and long-term system performance.",
-                  points: [
-                    "Performance monitoring",
-                    "Cloud migration support",
-                    "Code audits & reviews",
-                    "Troubleshooting & maintenance",
-                  ],
-                },
-
-                {
-                  number: "03",
-                  title: "Web Design & Maintenance",
-                  description:
-                    "Modern responsive web platforms and interactive digital experiences focused on usability, speed, and scalability.",
-                  points: [
-                    "Responsive web applications",
-                    "CMS & ecommerce systems",
-                    "UI/UX optimization",
-                    "Continuous maintenance",
-                  ],
-                },
-
-                {
-                  number: "04",
-                  title: "Cloud Services",
-                  description:
-                    "Secure cloud infrastructure and deployment solutions optimized for enterprise scalability and operational efficiency.",
-                  points: [
-                    "Hybrid cloud solutions",
-                    "Infrastructure optimization",
-                    "Secure deployments",
-                    "Cloud migration",
-                  ],
-                },
-
-                {
-                  number: "05",
-                  title: "Quality Assurance",
-                  description:
-                    "Automation-driven testing and QA systems ensuring reliability, performance, and faster product delivery cycles.",
-                  points: [
-                    "Automation testing",
-                    "Performance validation",
-                    "Agile & DevOps QA",
-                    "End-to-end testing",
-                  ],
-                },
-
-                {
-                  number: "06",
-                  title: "Talent Acquisition",
-                  description:
-                    "Strategic staffing and consulting solutions connecting businesses with highly skilled technology professionals.",
-                  points: [
-                    "Technical staffing",
-                    "IT consulting experts",
-                    "Rapid team scaling",
-                    "Project-based hiring",
-                  ],
-                },
-              ].map((service) => (
+              {services.map((service, i) => (
 
                 <article
-                  key={service.number}
+                  key={service.title}
                   className="vt-service-card"
+                  style={{ animationDelay: `${i * 0.1}s` }}
                 >
 
-                  <div className="vt-service-no">
-                    {service.number}
+                  <div className="vt-service-accent" />
+
+                  <div className="vt-service-icon-wrap">
+                    <svg className="vt-service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {serviceIcons[service.icon]}
+                    </svg>
                   </div>
 
                   <div className="vt-service-content">
@@ -233,7 +303,9 @@ export default function Home() {
                           key={point}
                           className="vt-service-point"
                         >
-                          <span className="vt-service-bullet" />
+                          <svg className="vt-service-check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8L6.5 11.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                           {point}
                         </div>
                       ))}
@@ -244,7 +316,10 @@ export default function Home() {
                       className="vt-service-btn"
                       onClick={() => scrollTo("#contact")}
                     >
-                      Discuss Solution →
+                      Discuss Solution
+                      <svg className="vt-service-btn-arrow" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
                     </button>
 
                   </div>
