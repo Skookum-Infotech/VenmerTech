@@ -228,16 +228,165 @@ export default function Home() {
 
         </section>
 
-        {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-        <section id="services">
-          <div className="vt-section">
-            <p className="vt-section-label">What We Do</p>
-            <h2 className="vt-h2">Services built for modern business.</h2>
-            <div className="vt-services-list">
-              {SERVICES.map((s) => <ServiceRow key={s.num} {...s} />)}
-            </div>
+
+{/* ── SERVICES ──────────────────────────────────────────────────────── */}
+<section id="services" className="vt-services-wrap">
+
+  <div className="vt-section">
+
+    <div className="vt-services-head">
+
+      <p className="vt-section-label">
+        Services
+      </p>
+
+      <h2 className="vt-h2 vt-services-title">
+        Technology solutions built to scale modern businesses.
+      </h2>
+
+      <p className="vt-services-sub">
+        We help organizations modernize operations, improve digital
+        efficiency, and accelerate growth through enterprise-grade
+        technology solutions.
+      </p>
+
+    </div>
+
+    <div className="vt-services-grid">
+
+      {[
+        {
+          number: "01",
+          title: "Application Development",
+          description:
+            "Custom business applications engineered to automate operations, streamline workflows, and modernize enterprise systems.",
+          points: [
+            "Custom enterprise applications",
+            "Workflow automation",
+            "System integrations",
+            "Scalable architecture",
+          ],
+        },
+
+        {
+          number: "02",
+          title: "Maintenance & Support",
+          description:
+            "Continuous support and optimization services designed to improve reliability, scalability, and long-term system performance.",
+          points: [
+            "Performance monitoring",
+            "Cloud migration support",
+            "Code audits & reviews",
+            "Troubleshooting & maintenance",
+          ],
+        },
+
+        {
+          number: "03",
+          title: "Web Design & Maintenance",
+          description:
+            "Modern responsive web platforms and interactive digital experiences focused on usability, speed, and scalability.",
+          points: [
+            "Responsive web applications",
+            "CMS & ecommerce systems",
+            "UI/UX optimization",
+            "Continuous maintenance",
+          ],
+        },
+
+        {
+          number: "04",
+          title: "Cloud Services",
+          description:
+            "Secure cloud infrastructure and deployment solutions optimized for enterprise scalability and operational efficiency.",
+          points: [
+            "Hybrid cloud solutions",
+            "Infrastructure optimization",
+            "Secure deployments",
+            "Cloud migration",
+          ],
+        },
+
+        {
+          number: "05",
+          title: "Quality Assurance",
+          description:
+            "Automation-driven testing and QA systems ensuring reliability, performance, and faster product delivery cycles.",
+          points: [
+            "Automation testing",
+            "Performance validation",
+            "Agile & DevOps QA",
+            "End-to-end testing",
+          ],
+        },
+
+        {
+          number: "06",
+          title: "Talent Acquisition",
+          description:
+            "Strategic staffing and consulting solutions connecting businesses with highly skilled technology professionals.",
+          points: [
+            "Technical staffing",
+            "IT consulting experts",
+            "Rapid team scaling",
+            "Project-based hiring",
+          ],
+        },
+      ].map((service) => (
+
+        <article
+          key={service.number}
+          className="vt-service-card"
+        >
+
+          <div className="vt-service-no">
+            {service.number}
           </div>
-        </section>
+
+          <div className="vt-service-content">
+
+            <h3 className="vt-service-heading">
+              {service.title}
+            </h3>
+
+            <p className="vt-service-description">
+              {service.description}
+            </p>
+
+            <div className="vt-service-points">
+
+              {service.points.map((point) => (
+                <div
+                  key={point}
+                  className="vt-service-point"
+                >
+                  <span className="vt-service-bullet" />
+                  {point}
+                </div>
+              ))}
+
+            </div>
+
+            <button
+              className="vt-service-btn"
+              onClick={() => scrollTo("#contact")}
+            >
+              Discuss Solution →
+            </button>
+
+          </div>
+
+        </article>
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
 
         {/* ── ABOUT ─────────────────────────────────────────────────────────── */}
         <section id="about" className="vt-about-section">
