@@ -674,36 +674,72 @@ section { scroll-margin-top: 5rem; }
 .vt-pillar-desc  { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
 
 /* WORK */
-.vt-logos {
-  margin-top: 3.5rem;
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
-  border: 1px solid var(--subtle);
+
+/* ───────────────── TRUST ───────────────── */
+
+.vt-trust-section {
+  background: white;
+
+  border-top:
+    1px solid rgba(0,0,0,0.06);
+
+  border-bottom:
+    1px solid rgba(0,0,0,0.06);
 }
-.vt-logo-cell {
-  padding: 2.5rem 1rem; display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--subtle); border-right: 1px solid var(--subtle);
-  transition: color 0.2s, background 0.2s;
+
+.vt-trust-wrap {
+  display: grid;
+
+  grid-template-columns:
+    1.1fr 0.9fr;
+
+  gap: 4rem;
+
+  align-items: center;
 }
-.vt-logo-cell:last-child { border-right: none; }
-.vt-logo-cell:hover { color: var(--ink); background: var(--white); }
-.vt-quote-block {
-  margin-top: 3rem; border: 1px solid var(--subtle);
-  padding: 3.5rem; background: var(--white);
+
+.vt-trust-right {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
 }
-.vt-quote {
-  font-family: var(--serif); font-size: clamp(1.15rem, 2.5vw, 1.6rem);
-  font-style: italic; color: var(--ink); line-height: 1.55; max-width: 56ch;
+
+.vt-trust-item {
+  display: flex;
+  align-items: center;
+
+  gap: 0.85rem;
+
+  font-size: 0.9rem;
+
+  color: var(--ink);
+
+  padding-bottom: 1rem;
+
+  border-bottom:
+    1px solid rgba(0,0,0,0.06);
 }
-.vt-quote-author { margin-top: 2rem; display: flex; align-items: center; gap: 1rem; }
-.vt-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--ink); display: flex; align-items: center; justify-content: center;
-  font-size: 0.65rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em;
+
+.vt-trust-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--ink);
+
   flex-shrink: 0;
 }
-.vt-author-name { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
-.vt-author-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+@media (max-width: 900px) {
+
+  .vt-trust-wrap {
+    grid-template-columns: 1fr;
+
+    gap: 3rem;
+  }
+}
 
 /* CONTACT */
 .vt-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; margin-top: 4rem; align-items: start; }

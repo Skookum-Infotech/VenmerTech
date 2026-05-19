@@ -428,30 +428,53 @@ export default function Home() {
         </section>
 
         {/* ── WORK ──────────────────────────────────────────────────────────── */}
-        <section id="work">
+        {/* ── TRUST ───────────────────────────────────────── */}
+        <section id="work" className="vt-trust-section">
+
           <div className="vt-section">
-            <p className="vt-section-label">Trusted By</p>
-            <h2 className="vt-h2">Businesses that trust us.</h2>
-            <div className="vt-logos">
-              {["Arcova", "Meridian", "Halvex", "Nortis", "Quellar", "Stratum"].map((n) => (
-                <div key={n} className="vt-logo-cell">{n}</div>
-              ))}
-            </div>
-            <div className="vt-quote-block">
-              <blockquote className="vt-quote">
-                "Venmer Tech transformed our IT operations completely. Their team understood our business
-                goals from day one and delivered infrastructure that scaled effortlessly with our growth."
-              </blockquote>
-              <div className="vt-quote-author">
-                <div className="vt-avatar">AK</div>
-                <div>
-                  <div className="vt-author-name">Arjun Kumar</div>
-                  <div className="vt-author-role">CTO, Meridian Technologies</div>
-                </div>
+
+            <div className="vt-trust-wrap">
+
+              <div className="vt-trust-left">
+
+                <p className="vt-section-label">
+                  Why Us
+                </p>
+
+                <h2 className="vt-h2">
+                  Reliable technology partnerships built for long-term growth.
+                </h2>
+
               </div>
+
+              <div className="vt-trust-right">
+
+                {[
+                  "Enterprise-focused delivery",
+                  "Scalable cloud infrastructure",
+                  "Modern development practices",
+                  "Quality-driven execution",
+                ].map((item) => (
+
+                  <div
+                    key={item}
+                    className="vt-trust-item"
+                  >
+                    <span className="vt-trust-dot" />
+                    {item}
+                  </div>
+
+                ))}
+
+              </div>
+
             </div>
+
           </div>
+
         </section>
+
+
 
         {/* ── CONTACT ───────────────────────────────────────────────────────── */}
         <section id="contact" style={{ background: "var(--white)", borderTop: "1px solid var(--subtle)" }}>
