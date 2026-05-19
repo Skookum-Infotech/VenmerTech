@@ -188,18 +188,16 @@ export default function Home() {
           <div className="vt-cinematic-content">
 
             <p className="vt-cinematic-kicker">
-              Enterprise Technology & Infrastructure
+              Enterprise Technology • Cloud • Consulting
             </p>
 
             <h1 className="vt-cinematic-title">
-              Building
-              <span>Digital Momentum</span>
+              Collaborative
+              <span>Transformation</span>
             </h1>
 
             <p className="vt-cinematic-description">
-              Scalable infrastructure, secure systems,
-              and modern digital ecosystems engineered
-              for ambitious businesses.
+              We help organizations modernize operations, scale digital infrastructure, and accelerate business growth through enterprise-grade technology solutions.
             </p>
 
             <div className="vt-cinematic-actions">
@@ -229,161 +227,161 @@ export default function Home() {
         </section>
 
 
-{/* ── SERVICES ──────────────────────────────────────────────────────── */}
-<section id="services" className="vt-services-wrap">
+        {/* ── SERVICES ──────────────────────────────────────────────────────── */}
+        <section id="services" className="vt-services-wrap">
 
-  <div className="vt-section">
+          <div className="vt-section">
 
-    <div className="vt-services-head">
+            <div className="vt-services-head">
 
-      <p className="vt-section-label">
-        Services
-      </p>
+              <p className="vt-section-label">
+                Services
+              </p>
 
-      <h2 className="vt-h2 vt-services-title">
-        Technology solutions built to scale modern businesses.
-      </h2>
+              <h2 className="vt-h2 vt-services-title">
+                Technology solutions built to scale modern businesses.
+              </h2>
 
-      <p className="vt-services-sub">
-        We help organizations modernize operations, improve digital
-        efficiency, and accelerate growth through enterprise-grade
-        technology solutions.
-      </p>
+              <p className="vt-services-sub">
+                We help organizations modernize operations, improve digital
+                efficiency, and accelerate growth through enterprise-grade
+                technology solutions.
+              </p>
 
-    </div>
+            </div>
 
-    <div className="vt-services-grid">
+            <div className="vt-services-grid">
 
-      {[
-        {
-          number: "01",
-          title: "Application Development",
-          description:
-            "Custom business applications engineered to automate operations, streamline workflows, and modernize enterprise systems.",
-          points: [
-            "Custom enterprise applications",
-            "Workflow automation",
-            "System integrations",
-            "Scalable architecture",
-          ],
-        },
+              {[
+                {
+                  number: "01",
+                  title: "Application Development",
+                  description:
+                    "Custom business applications engineered to automate operations, streamline workflows, and modernize enterprise systems.",
+                  points: [
+                    "Custom enterprise applications",
+                    "Workflow automation",
+                    "System integrations",
+                    "Scalable architecture",
+                  ],
+                },
 
-        {
-          number: "02",
-          title: "Maintenance & Support",
-          description:
-            "Continuous support and optimization services designed to improve reliability, scalability, and long-term system performance.",
-          points: [
-            "Performance monitoring",
-            "Cloud migration support",
-            "Code audits & reviews",
-            "Troubleshooting & maintenance",
-          ],
-        },
+                {
+                  number: "02",
+                  title: "Maintenance & Support",
+                  description:
+                    "Continuous support and optimization services designed to improve reliability, scalability, and long-term system performance.",
+                  points: [
+                    "Performance monitoring",
+                    "Cloud migration support",
+                    "Code audits & reviews",
+                    "Troubleshooting & maintenance",
+                  ],
+                },
 
-        {
-          number: "03",
-          title: "Web Design & Maintenance",
-          description:
-            "Modern responsive web platforms and interactive digital experiences focused on usability, speed, and scalability.",
-          points: [
-            "Responsive web applications",
-            "CMS & ecommerce systems",
-            "UI/UX optimization",
-            "Continuous maintenance",
-          ],
-        },
+                {
+                  number: "03",
+                  title: "Web Design & Maintenance",
+                  description:
+                    "Modern responsive web platforms and interactive digital experiences focused on usability, speed, and scalability.",
+                  points: [
+                    "Responsive web applications",
+                    "CMS & ecommerce systems",
+                    "UI/UX optimization",
+                    "Continuous maintenance",
+                  ],
+                },
 
-        {
-          number: "04",
-          title: "Cloud Services",
-          description:
-            "Secure cloud infrastructure and deployment solutions optimized for enterprise scalability and operational efficiency.",
-          points: [
-            "Hybrid cloud solutions",
-            "Infrastructure optimization",
-            "Secure deployments",
-            "Cloud migration",
-          ],
-        },
+                {
+                  number: "04",
+                  title: "Cloud Services",
+                  description:
+                    "Secure cloud infrastructure and deployment solutions optimized for enterprise scalability and operational efficiency.",
+                  points: [
+                    "Hybrid cloud solutions",
+                    "Infrastructure optimization",
+                    "Secure deployments",
+                    "Cloud migration",
+                  ],
+                },
 
-        {
-          number: "05",
-          title: "Quality Assurance",
-          description:
-            "Automation-driven testing and QA systems ensuring reliability, performance, and faster product delivery cycles.",
-          points: [
-            "Automation testing",
-            "Performance validation",
-            "Agile & DevOps QA",
-            "End-to-end testing",
-          ],
-        },
+                {
+                  number: "05",
+                  title: "Quality Assurance",
+                  description:
+                    "Automation-driven testing and QA systems ensuring reliability, performance, and faster product delivery cycles.",
+                  points: [
+                    "Automation testing",
+                    "Performance validation",
+                    "Agile & DevOps QA",
+                    "End-to-end testing",
+                  ],
+                },
 
-        {
-          number: "06",
-          title: "Talent Acquisition",
-          description:
-            "Strategic staffing and consulting solutions connecting businesses with highly skilled technology professionals.",
-          points: [
-            "Technical staffing",
-            "IT consulting experts",
-            "Rapid team scaling",
-            "Project-based hiring",
-          ],
-        },
-      ].map((service) => (
+                {
+                  number: "06",
+                  title: "Talent Acquisition",
+                  description:
+                    "Strategic staffing and consulting solutions connecting businesses with highly skilled technology professionals.",
+                  points: [
+                    "Technical staffing",
+                    "IT consulting experts",
+                    "Rapid team scaling",
+                    "Project-based hiring",
+                  ],
+                },
+              ].map((service) => (
 
-        <article
-          key={service.number}
-          className="vt-service-card"
-        >
-
-          <div className="vt-service-no">
-            {service.number}
-          </div>
-
-          <div className="vt-service-content">
-
-            <h3 className="vt-service-heading">
-              {service.title}
-            </h3>
-
-            <p className="vt-service-description">
-              {service.description}
-            </p>
-
-            <div className="vt-service-points">
-
-              {service.points.map((point) => (
-                <div
-                  key={point}
-                  className="vt-service-point"
+                <article
+                  key={service.number}
+                  className="vt-service-card"
                 >
-                  <span className="vt-service-bullet" />
-                  {point}
-                </div>
+
+                  <div className="vt-service-no">
+                    {service.number}
+                  </div>
+
+                  <div className="vt-service-content">
+
+                    <h3 className="vt-service-heading">
+                      {service.title}
+                    </h3>
+
+                    <p className="vt-service-description">
+                      {service.description}
+                    </p>
+
+                    <div className="vt-service-points">
+
+                      {service.points.map((point) => (
+                        <div
+                          key={point}
+                          className="vt-service-point"
+                        >
+                          <span className="vt-service-bullet" />
+                          {point}
+                        </div>
+                      ))}
+
+                    </div>
+
+                    <button
+                      className="vt-service-btn"
+                      onClick={() => scrollTo("#contact")}
+                    >
+                      Discuss Solution →
+                    </button>
+
+                  </div>
+
+                </article>
               ))}
 
             </div>
 
-            <button
-              className="vt-service-btn"
-              onClick={() => scrollTo("#contact")}
-            >
-              Discuss Solution →
-            </button>
-
           </div>
 
-        </article>
-      ))}
-
-    </div>
-
-  </div>
-
-</section>
+        </section>
 
 
 
