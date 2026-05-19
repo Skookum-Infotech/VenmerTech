@@ -410,53 +410,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── WORK/TRUST ──────────────────────────────────────────────────────────── */}
-        <section id="work" className="vt-trust-section">
-
-          <div className="vt-section">
-
-            <div className="vt-trust-wrap">
-
-              <div className="vt-trust-left">
-
-                <p className="vt-section-label">
-                  Why Us
-                </p>
-
-                <h2 className="vt-h2">
-                  Reliable technology partnerships built for long-term growth.
-                </h2>
-
-              </div>
-
-              <div className="vt-trust-right">
-
-                {[
-                  "Enterprise-focused delivery",
-                  "Scalable cloud infrastructure",
-                  "Modern development practices",
-                  "Quality-driven execution",
-                ].map((item) => (
-
-                  <div
-                    key={item}
-                    className="vt-trust-item"
-                  >
-                    <span className="vt-trust-dot" />
-                    {item}
-                  </div>
-
-                ))}
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
         {/* ── CONTACT ───────────────────────────────────────────────────────── */}
         <section id="contact" style={{ background: "var(--white)", borderTop: "1px solid var(--subtle)" }}>
           <div className="vt-section">

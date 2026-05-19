@@ -3,7 +3,6 @@ export interface NavItem { label: string; href: string }
 export const NAV_ITEMS: NavItem[] = [
   { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "#contact" },
 ];
