@@ -1,6 +1,6 @@
 "use client";
 
-import { handleHashNav } from "./nav-data";
+import { handleHashNav } from "../nav-data";
 
 const USEFUL_LINKS = [
   { label: "Home", href: "/" },

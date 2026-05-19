@@ -297,19 +297,18 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-btn-primary {
-
-
-  color: white;
-
-
+  color: black;
   cursor: pointer;
-
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid black;
   transition: 0.25s ease;
-
+  background: white;
 }
 
 .vt-btn-primary:hover {
-  opacity: 0.8;
+  background: black;
+  color: white;
 }
 
 @keyframes scrollPulse {

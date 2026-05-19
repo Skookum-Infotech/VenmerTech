@@ -299,8 +299,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── WORK ──────────────────────────────────────────────────────────── */}
-        {/* ── TRUST ───────────────────────────────────────── */}
+        {/* ── WORK/TRUST ──────────────────────────────────────────────────────────── */}
         <section id="work" className="vt-trust-section">
 
           <div className="vt-section">

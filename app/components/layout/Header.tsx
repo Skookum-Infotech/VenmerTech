@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { NAV_ITEMS, handleHashNav } from "./nav-data";
+import { NAV_ITEMS, handleHashNav } from "../nav-data";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
