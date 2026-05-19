@@ -309,35 +309,26 @@ export default function Home() {
             </div>
 
             <div className="vt-services-grid" ref={gridRef}>
-
               {services.map((service, i) => (
-
                 <article
                   key={service.title}
                   className="vt-service-card"
                   style={{ animationDelay: `${i * 0.1}s` }}
                 >
-
                   <div className="vt-service-accent" />
-
                   <div className="vt-service-icon-wrap">
                     <svg className="vt-service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                       {serviceIcons[service.icon]}
                     </svg>
                   </div>
-
                   <div className="vt-service-content">
-
                     <h3 className="vt-service-heading">
                       {service.title}
                     </h3>
-
                     <p className="vt-service-description">
                       {service.description}
                     </p>
-
                     <div className="vt-service-points">
-
                       {service.points.map((point) => (
                         <div
                           key={point}
