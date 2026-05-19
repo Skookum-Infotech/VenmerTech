@@ -13,16 +13,34 @@ export default function Header() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   function navClick(e: React.MouseEvent, href: string) {
     if (href.startsWith("#")) { e.preventDefault(); handleHashNav(href); }
   }
 
   return (
-    <header>
+    <header className={`vt-header${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}>
       <nav className={`vt-nav${scrolled ? " scrolled" : ""}`}>
-        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="vt-logo">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setMenuOpen(false);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="vt-logo"
+        >
           <div className="vt-logo-mark">VT</div>
-          VenmerTech
+          <div className="vt-logo-copy">
+            <span className="vt-logo-name">VenmerTech</span>
+            <span className="vt-logo-sub">Enterprise technology partner</span>
+          </div>
         </a>
         <div className="vt-nav-links">
           {NAV_ITEMS.map((n) => (
@@ -32,11 +50,28 @@ export default function Header() {
           ))}
           <button className="vt-btn-nav" onClick={() => handleHashNav("#contact")}>Get in Touch</button>
         </div>
-        <button className={`vt-hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+        <button
+          className={`vt-hamburger${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+          aria-controls="vt-mobile-menu"
+        >
           <span /><span /><span />
         </button>
       </nav>
-      <div className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
+      <div className={`vt-mobile-backdrop${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(false)} />
+      <div id="vt-mobile-menu" className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
+        <div className="vt-mobile-meta">
+          <div className="vt-mobile-brand">
+            <span className="vt-logo-mark">VT</span>
+            <div>
+              <div className="vt-mobile-title">VenmerTech</div>
+              <div className="vt-mobile-sub">Enterprise technology partner</div>
+            </div>
+          </div>
+          <button className="vt-mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">Close</button>
+        </div>
         {NAV_ITEMS.map((n) => (
           <a key={n.label} href={n.href} className="vt-mobile-link" onClick={(e) => { navClick(e, n.href); setMenuOpen(false); }}>{n.label}</a>
         ))}
