@@ -1,99 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { scrollTo } from "./components/nav-data";
 import './page.css'
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-interface NavItem { label: string; href: string }
-interface Service { num: string; title: string; description: string }
-interface Stat { value: string; label: string }
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-const NAV_ITEMS: NavItem[] = [
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
-];
-
-const SERVICES: Service[] = [
-  { num: "01", title: "IT Infrastructure", description: "Scalable cloud, hybrid, or on-premises infrastructure engineered for reliability and zero downtime." },
-  { num: "02", title: "Technology Consulting", description: "Strategic roadmaps that align IT investments with long-term business goals and measurable growth." },
-  { num: "03", title: "Cybersecurity", description: "Comprehensive audits, threat monitoring, and compliance frameworks protecting every layer of your data." },
-  { num: "04", title: "Cloud Solutions", description: "Seamless migrations and optimisations on AWS, Azure, and GCP — lower costs, higher performance." },
-  { num: "05", title: "Managed Services", description: "24/7 proactive monitoring and expert support so your teams stay focused on innovation." },
-  { num: "06", title: "Digital Transformation", description: "End-to-end modernisation of legacy systems and workflows to unlock agility at every level." },
-];
-
-const STATS: Stat[] = [
-  { value: "200+", label: "Clients" },
-  { value: "98%", label: "Uptime" },
-  { value: "12+", label: "Years" },
-  { value: "50+", label: "Engineers" },
-];
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-function scrollTo(href: string) {
-  document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-}
-
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return { ref, visible };
-}
-
-function useCountUp(target: string, go: boolean) {
-  const [display, setDisplay] = useState("0");
-  useEffect(() => {
-    if (!go) return;
-    const isP = target.endsWith("%"), isPlus = target.endsWith("+");
-    const num = parseInt(target.replace(/\D/g, ""), 10);
-    let cur = 0;
-    const step = Math.max(1, Math.ceil(num / 40));
-    const id = setInterval(() => {
-      cur = Math.min(cur + step, num);
-      setDisplay(cur + (cur === num && isP ? "%" : cur === num && isPlus ? "+" : ""));
-      if (cur === num) clearInterval(id);
-    }, 28);
-    return () => clearInterval(id);
-  }, [go, target]);
-  return display;
-}
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-function StatItem({ value, label }: Stat) {
-  const { ref, visible } = useInView(0.4);
-  const count = useCountUp(value, visible);
-  return (
-    <div ref={ref} className="vt-stat">
-      <span className="vt-stat-num">{count}</span>
-      <span className="vt-stat-label">{label}</span>
-    </div>
-  );
-}
-
-function ServiceRow({ num, title, description }: Service) {
-  const { ref, visible } = useInView();
-  return (
-    <div ref={ref} className={`vt-service-row${visible ? " is-visible" : ""}`}>
-      <span className="vt-service-num">{num}</span>
-      <div className="vt-service-body">
-        <h3 className="vt-service-title">{title}</h3>
-        <p className="vt-service-desc">{description}</p>
-      </div>
-      <span className="vt-service-arrow">↗</span>
-    </div>
-  );
-}
 
 function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
@@ -124,44 +35,9 @@ function ContactForm() {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", h);
-    return () => window.removeEventListener("scroll", h);
-  }, []);
-
   return (
     <>
-      {/* ── NAV ─────────────────────────────────────────────────────────────── */}
-      <header>
-        <nav className={`vt-nav${scrolled ? " scrolled" : ""}`}>
-          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="vt-logo">
-            <div className="vt-logo-mark">VT</div>
-            VenmerTech
-          </a>
-          <div className="vt-nav-links">
-            {NAV_ITEMS.map((n) => (
-              <a key={n.label} href={n.href} onClick={(e) => { e.preventDefault(); scrollTo(n.href); }} className="vt-nav-link">
-                {n.label}
-              </a>
-            ))}
-            <button className="vt-btn-nav" onClick={() => scrollTo("#contact")}>Get in Touch</button>
-          </div>
-          <button className={`vt-hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-            <span /><span /><span />
-          </button>
-        </nav>
-        <div className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
-          {NAV_ITEMS.map((n) => (
-            <a key={n.label} href={n.href} className="vt-mobile-link" onClick={(e) => { e.preventDefault(); scrollTo(n.href); setMenuOpen(false); }}>{n.label}</a>
-          ))}
-          <a href="#contact" className="vt-mobile-link" onClick={(e) => { e.preventDefault(); scrollTo("#contact"); setMenuOpen(false); }}>Get in Touch →</a>
-        </div>
-      </header>
+      <Header />
 
       <main>
         {/* ── HERO ────────────────────────────────────────────────────────────── */}
@@ -225,7 +101,6 @@ export default function Home() {
           </div>
 
         </section>
-
 
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
         <section id="services" className="vt-services-wrap">
@@ -383,9 +258,6 @@ export default function Home() {
 
         </section>
 
-
-
-
         {/* ── ABOUT ─────────────────────────────────────────────────────────── */}
         <section id="about" className="vt-about-section">
           <div className="vt-about">
@@ -475,7 +347,6 @@ export default function Home() {
         </section>
 
 
-
         {/* ── CONTACT ───────────────────────────────────────────────────────── */}
         <section id="contact" style={{ background: "var(--white)", borderTop: "1px solid var(--subtle)" }}>
           <div className="vt-section">
@@ -485,9 +356,9 @@ export default function Home() {
               <ContactForm />
               <div className="vt-contact-info">
                 {[
-                  { label: "Email", value: "hello@venmertech.com", href: "mailto:hello@venmertech.com" },
-                  { label: "Phone", value: "+1 (800) 123-4567", href: "tel:+18001234567" },
-                  { label: "Office", value: "450 Tech Park, Suite 12\nSan Francisco, CA 94105", href: undefined },
+                  { label: "Address", value: "1900 Yorktown St, #508, Houston, TX, 77056", href: undefined },
+                  { label: "Call Us", value: "+1 (940) 263-1641", href: "tel:+19402631641" },
+                  { label: "Email Us", value: "info@cognillc.com", href: "mailto:info@cognillc.com" },
                 ].map(({ label, value, href }) => (
                   <div key={label} className="vt-info-item">
                     <div className="vt-info-label">{label}</div>
@@ -510,21 +381,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ── FOOTER ────────────────────────────────────────────────────────────── */}
-      <footer style={{ borderTop: "1px solid var(--subtle)" }}>
-        <div className="vt-footer">
-          <a href="#" className="vt-logo" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-            <div className="vt-logo-mark">VT</div>
-            VenmerTech
-          </a>
-          <div className="vt-footer-links">
-            {NAV_ITEMS.map((n) => (
-              <a key={n.label} href={n.href} className="vt-footer-link" onClick={(e) => { e.preventDefault(); scrollTo(n.href); }}>{n.label}</a>
-            ))}
-          </div>
-          <p className="vt-copy">© {new Date().getFullYear()} Venmer Tech. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
