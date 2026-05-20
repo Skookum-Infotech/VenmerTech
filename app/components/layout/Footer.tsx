@@ -107,14 +107,14 @@ export default function Footer() {
           <h4 className="vt-footer-heading">Contact Us</h4>
           <ul className="vt-footer-list vt-footer-contact">
             <li>
-              2501 Lakeside Pkwy 
+              2501 Lakeside Pkwy
               <br />
               Flower Mound, TX 75022-4180
               <br />
               United States
             </li>
             <li>
-              <a href="tel:+19402631641">Phone: +1(940)224.0696</a>
+              <a href="tel:+19402631641">Phone: +1(940)240.6962</a>
             </li>
             <li>
               <a href="mailto:info@venmertech.com">
