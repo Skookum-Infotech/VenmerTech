@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="vt-footer-col vt-footer-about">
           <Link href="/" className="vt-logo">
             <div className="vt-logo-mark">VT</div>
-            VenmerTech
+            Venmer Tech LLC
           </Link>
           <p className="vt-footer-desc">
             Venmer Tech LLC is a leading Information Technology, Consulting and
@@ -107,14 +107,14 @@ export default function Footer() {
           <h4 className="vt-footer-heading">Contact Us</h4>
           <ul className="vt-footer-list vt-footer-contact">
             <li>
-              1900 Yorktown St, #508
+              2501 Lakeside Pkwy 
               <br />
-              Houston, TX 77056
+              Flower Mound, TX 75022-4180
               <br />
               United States
             </li>
             <li>
-              <a href="tel:+19402631641">Phone: +1(940)263.1641</a>
+              <a href="tel:+19402631641">Phone: +1(940)224.0696</a>
             </li>
             <li>
               <a href="mailto:info@venmertech.com">

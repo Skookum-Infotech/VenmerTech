@@ -597,13 +597,15 @@ export default function Home() {
                   {[
                     {
                       label: "Address",
-                      value: "1900 Yorktown St, #508, Houston, TX, 77056",
+                      value: "2501 Lakeside Pkwy, Flower Mound, TX 75022-4180",
                       href: undefined,
                     },
                     {
                       label: "Call Us",
-                      value: "+1 (940) 263-1641",
-                      href: "tel:+19402631641",
+                      value: "+1 (940) 224-0696",
+                      href: "tel:+19402240696",
+                      
+
                     },
                     {
                       label: "Email Us",
