@@ -9,8 +9,8 @@
   --bg:      #f8fafc;
   --white:   #ffffff;
   --accent:  #1a1a1a;
-  --sans: 'Syne', sans-serif;
-  --serif: 'Instrument Serif', serif;
+  --sans: 'Inter', sans-serif;
+  --serif: 'Inter', serif;
 }
 
 .vt-careers-page { background: var(--bg); min-height: 100vh; }

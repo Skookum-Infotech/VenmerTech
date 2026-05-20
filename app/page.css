@@ -9,8 +9,8 @@
   --bg:      #f8fafc;
   --white:   #ffffff;
   --accent:  #1a1a1a;
-  --sans: 'Syne', sans-serif;
-  --serif: 'Instrument Serif', serif;
+  --sans: 'Inter', sans-serif;
+  --serif: 'Inter', serif;
 }
 
 html { scroll-behavior: smooth; background: var(--bg); }
@@ -402,7 +402,7 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-cinematic-title {
-  font-family: var(--serif);
+  font-family: var(--sans);
 
   font-size: clamp(4rem, 10vw, 9rem);
 
@@ -554,6 +554,8 @@ section { scroll-margin-top: 5rem; }
 .vt-btn-hero {
   color: white;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .vt-btn-primary {
