@@ -492,7 +492,6 @@ export default function Home() {
                 />
               </svg>
             </button>
-
           </div>
         </section>
 
@@ -602,8 +601,8 @@ export default function Home() {
                     },
                     {
                       label: "Call Us",
-                      value: "+1 (940) 224-0696",
-                      href: "tel:+19402240696",
+                      value: "+1 (940) 240-6962",
+                      href: "tel:+19402406962",
                     },
                     {
                       label: "Email Us",
