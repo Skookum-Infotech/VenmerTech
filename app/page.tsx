@@ -468,31 +468,31 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-
-                    <button
-                      className="vt-service-btn"
-                      onClick={() => scrollTo("#contact")}
-                    >
-                      Discuss Solution
-                      <svg
-                        className="vt-service-btn-arrow"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M4 10H16M16 10L11 5M16 10L11 15"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
                   </div>
                 </article>
               ))}
             </div>
+            <button
+              className="vt-service-btn"
+              onClick={() => scrollTo("#contact")}
+            >
+              Discuss Solution
+              <svg
+                className="vt-service-btn-arrow"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 10H16M16 10L11 5M16 10L11 15"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
           </div>
         </section>
 
@@ -604,8 +604,6 @@ export default function Home() {
                       label: "Call Us",
                       value: "+1 (940) 224-0696",
                       href: "tel:+19402240696",
-                      
-
                     },
                     {
                       label: "Email Us",

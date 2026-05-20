@@ -908,31 +908,33 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-service-btn {
-  margin-top: auto;
+  margin: 2.5rem auto 0;
 
   width: fit-content;
-
-  margin-top: 2.5rem;
 
   display: flex;
   align-items: center;
   gap: 0.6rem;
 
   padding:
-    0.85rem
-    1.4rem;
+    0.9rem
+    2rem;
 
-  border:
-    1px solid var(--subtle);
+  border: none;
 
   background:
-    var(--white);
+    linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 1),
+      rgba(139, 92, 246, 1)
+    );
 
-  color: var(--ink);
+  color: #fff;
 
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
 
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 
   border-radius: 10px;
@@ -940,9 +942,6 @@ section { scroll-margin-top: 5rem; }
   cursor: pointer;
 
   transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
@@ -955,22 +954,10 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-service-btn:hover {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(99, 102, 241, 0.1),
-      rgba(139, 92, 246, 0.1)
-    );
-
-  color: var(--ink);
-
-  border-color:
-    rgba(99, 102, 241, 0.25);
-
   transform: translateY(-2px);
 
   box-shadow:
-    0 8px 20px rgba(99, 102, 241, 0.12);
+    0 12px 28px rgba(99, 102, 241, 0.35);
 }
 
 .vt-service-btn:hover .vt-service-btn-arrow {
