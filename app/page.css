@@ -9,6 +9,7 @@
   --bg:      #f8fafc;
   --white:   #ffffff;
   --accent:  #1a1a1a;
+  --lime:    #9dd220f3;
   --sans: 'Inter', sans-serif;
   --serif: 'Inter', serif;
 }
@@ -24,7 +25,7 @@ section { scroll-margin-top: 5rem; }
   right: 0;
   z-index: 100;
   padding: 1rem 1.25rem 0;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .vt-nav {
@@ -59,51 +60,18 @@ section { scroll-margin-top: 5rem; }
 .vt-logo {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
   min-width: 0;
   text-decoration: none;
-  color: var(--ink);
 }
 
-.vt-logo-mark {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+.vt-logo-img {
+  height: 55px;
+  width: auto;
   flex-shrink: 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.vt-logo-copy {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.vt-logo-name {
-  font-family: var(--sans);
-  font-size: 0.96rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--white);
-}
-
-.vt-logo-sub {
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.68);
-  margin-top: 0.2rem;
-  white-space: nowrap;
+.vt-logo-img-small {
+  height: 32px;
 }
 
 .vt-nav-links {
@@ -148,7 +116,7 @@ section { scroll-margin-top: 5rem; }
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--lime);
   color: var(--white);
   box-shadow: none;
   transition:
@@ -198,6 +166,7 @@ section { scroll-margin-top: 5rem; }
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
+  z-index: 90;
 }
 
 .vt-mobile-backdrop.open {
@@ -221,6 +190,8 @@ section { scroll-margin-top: 5rem; }
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
   box-shadow: 0 30px 80px rgba(15, 23, 42, 0.2);
+  pointer-events: auto;
+  z-index: 110;
 }
 
 .vt-mobile-menu.open {
@@ -240,26 +211,6 @@ section { scroll-margin-top: 5rem; }
 .vt-mobile-brand {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-}
-
-.vt-mobile-brand .vt-logo-mark {
-  width: 38px;
-  height: 38px;
-}
-
-.vt-mobile-title {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.vt-mobile-sub {
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 0.15rem;
 }
 
 .vt-mobile-close {
@@ -287,7 +238,7 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-mobile-link:last-child {
-  background: linear-gradient(135deg, #0f172a, #1f2937);
+  background: var(--lime);
   color: var(--white);
   border-color: transparent;
 }
@@ -296,20 +247,6 @@ section { scroll-margin-top: 5rem; }
   .vt-nav-links { display: none; }
   .vt-hamburger { display: flex; }
   .vt-nav { padding: 0.8rem 0.85rem 0.8rem 1rem; border-radius: 22px; }
-  .vt-logo-sub { display: none; }
-}
-
-.vt-nav.scrolled .vt-logo-mark {
-  background: linear-gradient(135deg, #0f172a, #243145);
-  border-color: rgba(255, 255, 255, 0);
-}
-
-.vt-nav.scrolled .vt-logo-name {
-  color: var(--ink);
-}
-
-.vt-nav.scrolled .vt-logo-sub {
-  color: var(--muted);
 }
 
 .vt-nav.scrolled .vt-nav-links {
@@ -327,7 +264,7 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-nav.scrolled .vt-btn-nav {
-  background: linear-gradient(135deg, #0f172a, #1f2937);
+  background: var(--lime);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
 }
 
@@ -404,7 +341,7 @@ section { scroll-margin-top: 5rem; }
 .vt-cinematic-title {
   font-family: var(--sans);
 
-  font-size: clamp(4rem, 10vw, 9rem);
+  font-size: clamp(3rem, 10vw, 9rem);
 
   line-height: 0.9;
 
@@ -413,6 +350,7 @@ section { scroll-margin-top: 5rem; }
   font-weight: 400;
 
   color: white;
+  overflow-wrap: anywhere;
 }
 
 .vt-cinematic-title span {
@@ -559,17 +497,17 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-btn-primary {
-  color: black;
+  color: var(--lime);
   cursor: pointer;
   padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid black;
+  border-radius: 15px;
+  border: 1px solid var(--lime);
   transition: 0.25s ease;
   background: white;
 }
 
 .vt-btn-primary:hover {
-  background: black;
+  background: var(--lime);
   color: white;
 }
 
@@ -592,7 +530,13 @@ section { scroll-margin-top: 5rem; }
 
 @media (max-width: 768px) {
   .vt-cinematic-title {
-    font-size: 4.5rem;
+    font-size: clamp(2.75rem, 10.5vw, 4.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .vt-cinematic-title span {
+    margin-top: 0.5rem;
   }
 
   .vt-floating-info {
@@ -686,17 +630,12 @@ section { scroll-margin-top: 5rem; }
 
 .vt-service-card {
   position: relative;
-
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
-
   padding: 2.5rem;
-
   background:
     var(--white);
-
   border:
     1px solid var(--subtle);
 
@@ -709,9 +648,7 @@ section { scroll-margin-top: 5rem; }
     border-color 0.4s ease,
     box-shadow 0.4s ease,
     background 0.4s ease;
-
   opacity: 0;
-
   animation: serviceFadeUp 0.6s ease forwards;
 }
 
@@ -728,62 +665,43 @@ section { scroll-margin-top: 5rem; }
 
 .vt-service-accent {
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
-
   height: 3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(99, 102, 241, 0.6),
-      rgba(139, 92, 246, 0.6),
-      transparent
-    );
-
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(178, 233, 13, 0.6), /* Matches your logo lime at 60% opacity */
+    rgba(204, 255, 51, 0.3), /* Slightly softer lime variation for gradient depth */
+    transparent
+  );
   transform: scaleX(0);
-
   transform-origin: left;
-
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .vt-service-card::before {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  background:
-    radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(99, 102, 241, 0.04),
-      transparent 40%
-    );
-
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(204, 255, 51, 0.04), /* Subtle background hover glow using your logo color */
+    transparent 40%
+  );
   opacity: 0;
-
   transition: opacity 0.4s ease;
-
   pointer-events: none;
 }
 
 .vt-service-card:hover {
   transform: translateY(-8px);
-
-  border-color:
-    rgba(99, 102, 241, 0.2);
-
-  background:
-    var(--white);
-
+  border-color: rgba(204, 255, 51, 0.2); /* Matches border hover to your logo color */
+  background: var(--white);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.08),
-    0 0 60px rgba(99, 102, 241, 0.06);
+    0 20px 40px rgba(204, 255, 51, 0.08), /* Updated box shadows to match your logo */
+    0 0 60px rgba(204, 255, 51, 0.06);
 }
 
 .vt-service-card:hover::before {
@@ -811,7 +729,7 @@ section { scroll-margin-top: 5rem; }
   border-radius: 14px;
 
   background:
-    var(--bg);
+    var(--lime);
 
   border:
     1px solid var(--subtle);
@@ -825,7 +743,7 @@ section { scroll-margin-top: 5rem; }
 
 .vt-service-card:hover .vt-service-icon-wrap {
   background:
-    rgba(99, 102, 241, 0.08);
+    rgba(132, 242, 69, 0.08);
 
   border-color:
     rgba(99, 102, 241, 0.15);
@@ -835,7 +753,7 @@ section { scroll-margin-top: 5rem; }
   width: 28px;
   height: 28px;
 
-  color: var(--muted);
+  color: white;
 
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -921,14 +839,7 @@ section { scroll-margin-top: 5rem; }
     2rem;
 
   border: none;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(99, 102, 241, 1),
-      rgba(139, 92, 246, 1)
-    );
-
+  background: var(--lime);
   color: #fff;
 
   font-size: 0.8rem;
@@ -951,13 +862,6 @@ section { scroll-margin-top: 5rem; }
   height: 14px;
 
   transition: transform 0.3s ease;
-}
-
-.vt-service-btn:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 12px 28px rgba(99, 102, 241, 0.35);
 }
 
 .vt-service-btn:hover .vt-service-btn-arrow {
@@ -1404,8 +1308,8 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-info-item:hover {
-  border-color: rgba(194, 158, 104, 0.26);
-  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+  border-color: rgba(161, 249, 37, 0.664);
+  box-shadow: 0 2px 5px rgba(145, 237, 41, 0.222);
 }
 
 .vt-info-label {
@@ -1521,10 +1425,6 @@ a.vt-info-value:hover { color: #9b7744; }
 
 .vt-footer-about .vt-logo {
   color: var(--white);
-}
-.vt-footer-about .vt-logo-mark {
-  background: var(--white);
-  color: var(--ink);
 }
 
 .vt-footer-desc {
