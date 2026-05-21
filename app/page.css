@@ -25,7 +25,7 @@ section { scroll-margin-top: 5rem; }
   right: 0;
   z-index: 100;
   padding: 1rem 1.25rem 0;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .vt-nav {
@@ -166,6 +166,7 @@ section { scroll-margin-top: 5rem; }
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
+  z-index: 90;
 }
 
 .vt-mobile-backdrop.open {
@@ -189,6 +190,8 @@ section { scroll-margin-top: 5rem; }
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
   box-shadow: 0 30px 80px rgba(15, 23, 42, 0.2);
+  pointer-events: auto;
+  z-index: 110;
 }
 
 .vt-mobile-menu.open {
@@ -235,7 +238,7 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-mobile-link:last-child {
-  background: linear-gradient(135deg, #0f172a, #1f2937);
+  background: var(--lime);
   color: var(--white);
   border-color: transparent;
 }
@@ -338,7 +341,7 @@ section { scroll-margin-top: 5rem; }
 .vt-cinematic-title {
   font-family: var(--sans);
 
-  font-size: clamp(4rem, 10vw, 9rem);
+  font-size: clamp(3rem, 10vw, 9rem);
 
   line-height: 0.9;
 
@@ -347,6 +350,7 @@ section { scroll-margin-top: 5rem; }
   font-weight: 400;
 
   color: white;
+  overflow-wrap: anywhere;
 }
 
 .vt-cinematic-title span {
@@ -526,7 +530,13 @@ section { scroll-margin-top: 5rem; }
 
 @media (max-width: 768px) {
   .vt-cinematic-title {
-    font-size: 4.5rem;
+    font-size: clamp(2.75rem, 10.5vw, 4.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .vt-cinematic-title span {
+    margin-top: 0.5rem;
   }
 
   .vt-floating-info {

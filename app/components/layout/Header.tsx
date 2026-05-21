@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { NAV_ITEMS, handleHashNav } from "../nav-data";
 
 export default function Header() {
@@ -36,10 +37,13 @@ export default function Header() {
           }}
           className="vt-logo"
         >
-          <img
+          <Image
             src={scrolled ? "/logo-dark.png" : "/logo-white.png"}
             alt="VenmerTech"
             className="vt-logo-img"
+            width={120}
+            height={60}
+            priority
           />
         </a>
         <div className="vt-nav-links">
@@ -64,7 +68,7 @@ export default function Header() {
       <div id="vt-mobile-menu" className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
         <div className="vt-mobile-meta">
           <div className="vt-mobile-brand">
-            <img src="/logo-dark.png" alt="VenmerTech" className="vt-logo-img vt-logo-img-small" />
+            <Image src="/logo-dark.png" alt="VenmerTech" className="vt-logo-img vt-logo-img-small" width={64} height={32} />
           </div>
           <button className="vt-mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">Close</button>
         </div>

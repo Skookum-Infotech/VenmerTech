@@ -55,7 +55,7 @@ export default function CareersPage() {
       <div className="vt-careers-hero">
         <h1>Join Our Team</h1>
         <p>
-          We're looking for passionate people to help us build the future of
+          We&apos;re looking for passionate people to help us build the future of
           enterprise technology. Explore open positions below.
         </p>
       </div>
@@ -67,10 +67,10 @@ export default function CareersPage() {
       </div>
 
       <div className="vt-careers-footer">
-        <h3>Don't see the right fit?</h3>
+        <h3>Don&apos;t see the right fit?</h3>
         <p>
-          We're always on the lookout for great talent. Send us your resume and
-          we'll reach out when something matches your profile.
+          We&apos;re always on the lookout for great talent. Send us your resume and
+          we&apos;ll reach out when something matches your profile.
         </p>
       </div>
       <Footer />
