@@ -37,8 +37,7 @@ export default function Footer() {
       <div className="vt-footer-grid">
         <div className="vt-footer-col vt-footer-about">
           <Link href="/" className="vt-logo">
-            <div className="vt-logo-mark">VT</div>
-            Venmer Tech LLC
+            <img src="/logo-white.png" alt="VenmerTech" className="vt-logo-img" />
           </Link>
           <p className="vt-footer-desc">
             Venmer Tech LLC is a leading Information Technology, Consulting and

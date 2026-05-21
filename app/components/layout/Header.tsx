@@ -36,11 +36,11 @@ export default function Header() {
           }}
           className="vt-logo"
         >
-          <div className="vt-logo-mark">VT</div>
-          <div className="vt-logo-copy">
-            <span className="vt-logo-name">VenmerTech</span>
-            <span className="vt-logo-sub">Enterprise technology partner</span>
-          </div>
+          <img
+            src={scrolled ? "/logo-dark.png" : "/logo-white.png"}
+            alt="VenmerTech"
+            className="vt-logo-img"
+          />
         </a>
         <div className="vt-nav-links">
           {NAV_ITEMS.map((n) => (
@@ -64,11 +64,7 @@ export default function Header() {
       <div id="vt-mobile-menu" className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
         <div className="vt-mobile-meta">
           <div className="vt-mobile-brand">
-            <span className="vt-logo-mark">VT</span>
-            <div>
-              <div className="vt-mobile-title">VenmerTech</div>
-              <div className="vt-mobile-sub">Enterprise technology partner</div>
-            </div>
+            <img src="/logo-dark.png" alt="VenmerTech" className="vt-logo-img vt-logo-img-small" />
           </div>
           <button className="vt-mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">Close</button>
         </div>
