@@ -52,28 +52,76 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-nav.scrolled {
-  background: rgba(255, 255, 255, 0.86);
-  border-color: rgba(15, 23, 42, 0.1);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+  background: rgba(13, 13, 13, 0.86);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
 }
+
+/* Logo---------------------------- */
 
 .vt-logo {
   display: flex;
   align-items: center;
-  min-width: 0;
+  gap: 0.8rem;
   text-decoration: none;
+  user-select: none;
 }
 
-.vt-logo-img {
-  height: 55px;
-  width: auto;
+.vt-logo-icon {
+  width: 42px;
+  height: auto;
   flex-shrink: 0;
 }
 
-.vt-logo-img-small {
-  height: 32px;
+.vt-logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
+.vt-logo-text {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--sans);
+  font-size: 2rem;
+  letter-spacing: -0.06em;
+}
+
+.vt-logo-venmer {
+  font-weight: 700;
+  color: white;
+  transition: color 0.25s ease;
+}
+
+.vt-logo-tech {
+  font-weight: 400;
+  color: #b3ff00;
+}
+
+.vt-logo-tagline {
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.25s ease;
+}
+
+
+.vt-mobile-menu .vt-logo-venmer,
+.vt-mobile-menu .vt-logo-tagline {
+  color: var(--ink);
+}
+
+.vt-logo-mobile .vt-logo-text {
+  font-size: 1.35rem;
+}
+
+.vt-logo-mobile .vt-logo-tagline {
+  font-size: 0.52rem;
+}
+
+/* --------------------- */
 .vt-nav-links {
   display: flex;
   align-items: center;
@@ -249,32 +297,19 @@ section { scroll-margin-top: 5rem; }
   .vt-nav { padding: 0.8rem 0.85rem 0.8rem 1rem; border-radius: 22px; }
 }
 
-.vt-nav.scrolled .vt-nav-links {
-  border-color: rgba(15, 23, 42, 0.08);
-  background: rgba(248, 250, 252, 0.72);
+
+/* LOGO------------------- */
+
+.vt-logo-icon {
+  width: 34px;
 }
 
-.vt-nav.scrolled .vt-nav-link {
-  color: var(--muted);
+.vt-logo-text {
+  font-size: 1.45rem;
 }
 
-.vt-nav.scrolled .vt-nav-link:hover {
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.vt-nav.scrolled .vt-btn-nav {
-  background: var(--lime);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
-}
-
-.vt-nav.scrolled .vt-hamburger {
-  background: rgba(15, 23, 42, 0.06);
-  border-color: rgba(15, 23, 42, 0.08);
-}
-
-.vt-nav.scrolled .vt-hamburger span {
-  background: var(--ink);
+.vt-logo-tagline {
+  font-size: 0.55rem;
 }
 
 /* HERO */
