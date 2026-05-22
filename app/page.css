@@ -57,22 +57,74 @@ section { scroll-margin-top: 5rem; }
   box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
 }
 
+/* Logo---------------------------- */
+
 .vt-logo {
   display: flex;
   align-items: center;
-  min-width: 0;
+  gap: 0.8rem;
   text-decoration: none;
+  user-select: none;
 }
 
-.vt-logo-img {
-  height: 55px;
-  width: auto;
+.vt-logo-icon {
+  width: 42px;
+  height: auto;
   flex-shrink: 0;
 }
 
-.vt-logo-img-small {
-  height: 32px;
+.vt-logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
+
+.vt-logo-text {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--sans);
+  font-size: 2rem;
+  letter-spacing: -0.06em;
+}
+
+.vt-logo-venmer {
+  font-weight: 700;
+  color: white;
+  transition: color 0.25s ease;
+}
+
+.vt-logo-tech {
+  font-weight: 400;
+  color: #b3ff00;
+}
+
+.vt-logo-tagline {
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.25s ease;
+}
+
+.vt-nav.scrolled .vt-logo-venmer,
+.vt-nav.scrolled .vt-logo-tagline {
+  color: var(--ink);
+}
+
+.vt-mobile-menu .vt-logo-venmer,
+.vt-mobile-menu .vt-logo-tagline {
+  color: var(--ink);
+}
+
+.vt-logo-mobile .vt-logo-text {
+  font-size: 1.35rem;
+}
+
+.vt-logo-mobile .vt-logo-tagline {
+  font-size: 0.52rem;
+}
+
 
 .vt-nav-links {
   display: flex;
@@ -275,6 +327,20 @@ section { scroll-margin-top: 5rem; }
 
 .vt-nav.scrolled .vt-hamburger span {
   background: var(--ink);
+}
+
+/* LOGO------------------- */
+
+.vt-logo-icon {
+  width: 34px;
+}
+
+.vt-logo-text {
+  font-size: 1.45rem;
+}
+
+.vt-logo-tagline {
+  font-size: 0.55rem;
 }
 
 /* HERO */

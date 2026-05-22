@@ -38,13 +38,23 @@ export default function Header() {
           className="vt-logo"
         >
           <Image
-            src={scrolled ? "/logo-dark.png" : "/logo-white.png"}
+            src="/logo-venmer.png"
             alt="VenmerTech"
-            className="vt-logo-img"
-            width={120}
-            height={60}
+            width={42}
+            height={42}
             priority
+            className="vt-logo-icon"
           />
+
+          <div className="vt-logo-text-wrap">
+            <div className="vt-logo-text">
+              <span className="vt-logo-venmer">Venmer</span>
+              <span className="vt-logo-tech">Tech</span>
+            </div>
+            <span className="vt-logo-tagline">
+              Enterprise Technology Partner
+            </span>
+          </div>
         </a>
         <div className="vt-nav-links">
           {NAV_ITEMS.map((n) => (
@@ -68,8 +78,25 @@ export default function Header() {
       <div id="vt-mobile-menu" className={`vt-mobile-menu${menuOpen ? " open" : ""}`}>
         <div className="vt-mobile-meta">
           <div className="vt-mobile-brand">
-            <Image src="/logo-dark.png" alt="VenmerTech" className="vt-logo-img vt-logo-img-small" width={64} height={32} />
-          </div>
+            <div className="vt-logo vt-logo-mobile">
+              <Image
+                src="/logo-venmer.png"
+                alt="VenmerTech"
+                width={34}
+                height={34}
+                className="vt-logo-icon"
+              />
+
+              <div className="vt-logo-text-wrap">
+                <div className="vt-logo-text">
+                  <span className="vt-logo-venmer">Venmer</span>
+                  <span className="vt-logo-tech">Tech</span>
+                </div>
+                <span className="vt-logo-tagline">
+                  Enterprise Technology Partner
+                </span>
+              </div>
+            </div>          </div>
           <button className="vt-mobile-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">Close</button>
         </div>
         {NAV_ITEMS.map((n) => (
