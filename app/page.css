@@ -52,9 +52,9 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-nav.scrolled {
-  background: rgba(255, 255, 255, 0.86);
-  border-color: rgba(15, 23, 42, 0.1);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+  background: rgba(13, 13, 13, 0.86);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
 }
 
 /* Logo---------------------------- */
@@ -107,10 +107,6 @@ section { scroll-margin-top: 5rem; }
   transition: color 0.25s ease;
 }
 
-.vt-nav.scrolled .vt-logo-venmer,
-.vt-nav.scrolled .vt-logo-tagline {
-  color: var(--ink);
-}
 
 .vt-mobile-menu .vt-logo-venmer,
 .vt-mobile-menu .vt-logo-tagline {
@@ -125,7 +121,7 @@ section { scroll-margin-top: 5rem; }
   font-size: 0.52rem;
 }
 
-
+/* --------------------- */
 .vt-nav-links {
   display: flex;
   align-items: center;
@@ -301,33 +297,6 @@ section { scroll-margin-top: 5rem; }
   .vt-nav { padding: 0.8rem 0.85rem 0.8rem 1rem; border-radius: 22px; }
 }
 
-.vt-nav.scrolled .vt-nav-links {
-  border-color: rgba(15, 23, 42, 0.08);
-  background: rgba(248, 250, 252, 0.72);
-}
-
-.vt-nav.scrolled .vt-nav-link {
-  color: var(--muted);
-}
-
-.vt-nav.scrolled .vt-nav-link:hover {
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.vt-nav.scrolled .vt-btn-nav {
-  background: var(--lime);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
-}
-
-.vt-nav.scrolled .vt-hamburger {
-  background: rgba(15, 23, 42, 0.06);
-  border-color: rgba(15, 23, 42, 0.08);
-}
-
-.vt-nav.scrolled .vt-hamburger span {
-  background: var(--ink);
-}
 
 /* LOGO------------------- */
 
