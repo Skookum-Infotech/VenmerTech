@@ -17,10 +17,38 @@ function ContactForm() {
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    setTimeout(() => setStatus("sent"), 1600);
+
+    try {
+      const workerUrl =
+        process?.env?.NEXT_PUBLIC_WORKER_URL ?? "http://127.0.0.1:8787";
+
+      const res = await fetch(workerUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Request failed (${res.status})`);
+      }
+
+      // attempt to parse JSON response if present
+      try {
+        await res.json();
+      } catch (_) {
+        // ignore parse errors — success indicated by HTTP status
+      }
+
+      setStatus("sent");
+    } catch (err) {
+      console.error("Contact form submit error:", err);
+      setStatus("idle");
+      // keep UX simple for now
+      alert("Something went wrong sending your message. Please try again.");
+    }
   };
   return (
     <form onSubmit={submit} className="vt-form">
