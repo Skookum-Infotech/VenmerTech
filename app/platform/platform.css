@@ -1,0 +1,616 @@
+:root {
+  --ink: #0d0d0d;
+  --muted: #6b7280;
+  --subtle: #e5e7eb;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --lime: #9dd220f3;
+  --sans: 'Inter', sans-serif;
+  --serif: 'Inter', serif;
+}
+
+.vt-plat-page { background: var(--bg); min-height: 100vh; overflow-x: clip; }
+
+/* SCROLL REVEAL --------------------------------------------------------- */
+
+.vt-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vt-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HERO ------------------------------------------------------------------ */
+
+.vt-plat-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 9.5rem 2.5rem 6rem;
+  background: var(--ink);
+}
+
+.vt-plat-hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.vt-plat-hero-glow::before,
+.vt-plat-hero-glow::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+.vt-plat-hero-glow::before {
+  width: 26rem;
+  height: 26rem;
+  top: -10rem;
+  left: -8rem;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 68%);
+}
+
+.vt-plat-hero-glow::after {
+  width: 24rem;
+  height: 24rem;
+  right: -6rem;
+  bottom: -12rem;
+  background: radial-gradient(circle, rgba(157, 210, 32, 0.35), transparent 70%);
+}
+
+.vt-plat-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.vt-plat-hero-copy {
+  text-align: left;
+  opacity: 0;
+  animation: platHeroIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes platHeroIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vt-plat-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b3ff00;
+  margin-bottom: 1.5rem;
+}
+
+.vt-plat-kicker::before {
+  content: '';
+  display: block;
+  width: 1.75rem;
+  height: 1px;
+  background: #b3ff00;
+}
+
+.vt-plat-hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 4.6vw, 4.1rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  max-width: 15ch;
+}
+
+.vt-plat-hero-sub {
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 46ch;
+}
+
+.vt-plat-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+
+.vt-plat-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--lime);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vt-plat-hero-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+.vt-plat-hero-ghost {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  padding: 0.95rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.vt-plat-hero-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--white);
+}
+
+/* Hero floating card ----------------------------------------------------- */
+
+.vt-plat-hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: platHeroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+
+.vt-plat-hero-card {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  padding: 2.1rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(22px);
+  color: var(--white);
+  transform: rotate(-2.5deg);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+}
+
+.vt-plat-hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: rotate(6deg) translate(10px, 14px);
+}
+
+.vt-plat-hero-card-label {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b3ff00;
+  margin-bottom: 1rem;
+}
+
+.vt-plat-hero-card-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.vt-plat-hero-card-desc {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* SHARED SECTION SHELL ---------------------------------------------------- */
+
+.vt-plat-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6.5rem 2.5rem;
+  scroll-margin-top: 5.5rem;
+}
+
+.vt-plat-section-head {
+  max-width: 620px;
+  margin-bottom: 3.5rem;
+}
+
+.vt-plat-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.vt-plat-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--muted);
+}
+
+.vt-plat-h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.vt-plat-section-sub {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* FEATURES — bento grid ---------------------------------------------------- */
+
+.vt-plat-features {
+  background: linear-gradient(160deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+}
+
+.vt-plat-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(200px, auto);
+  grid-auto-flow: dense;
+  gap: 1.25rem;
+}
+
+.vt-plat-feature-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 2.1rem;
+  background: var(--white);
+  border: 1px solid var(--subtle);
+  border-radius: 18px;
+  opacity: 0;
+  animation: platFadeUp 0.6s ease forwards;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.vt-plat-feature-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(157, 210, 32, 0.35);
+  box-shadow: 0 20px 40px rgba(157, 210, 32, 0.1);
+}
+
+@keyframes platFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vt-plat-feature-card:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+  padding: 2.75rem;
+  justify-content: center;
+  background: linear-gradient(155deg, rgba(157, 210, 32, 0.12), rgba(157, 210, 32, 0.02) 60%), var(--white);
+  border-color: rgba(157, 210, 32, 0.3);
+}
+
+.vt-plat-feature-index {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: var(--serif);
+  font-size: 2.75rem;
+  color: rgba(13, 13, 13, 0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.vt-plat-feature-card:first-child .vt-plat-feature-index {
+  font-size: 4rem;
+}
+
+.vt-plat-feature-icon-wrap {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--lime);
+  margin-bottom: 1.5rem;
+}
+
+.vt-plat-feature-card:first-child .vt-plat-feature-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+}
+
+.vt-plat-feature-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--white);
+}
+
+.vt-plat-feature-card:first-child .vt-plat-feature-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.vt-plat-feature-title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.vt-plat-feature-card:first-child .vt-plat-feature-title {
+  font-size: 1.65rem;
+}
+
+.vt-plat-feature-desc {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.65rem;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.vt-plat-feature-card:first-child .vt-plat-feature-desc {
+  font-size: 0.95rem;
+  max-width: 34ch;
+}
+
+/* HOW IT WORKS — ghost numerals ------------------------------------------- */
+
+.vt-plat-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+
+.vt-plat-steps::before {
+  content: '';
+  position: absolute;
+  top: 2.35rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--subtle) 8%, var(--subtle) 92%, transparent);
+}
+
+.vt-plat-step {
+  position: relative;
+  text-align: left;
+}
+
+.vt-plat-step-num {
+  font-family: var(--serif);
+  font-size: 3.75rem;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(13, 13, 13, 0.1);
+  margin-bottom: 0.25rem;
+}
+
+.vt-plat-step-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.vt-plat-step-desc {
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 26ch;
+}
+
+/* CROSS LINKS — scroll rail ------------------------------------------------ */
+
+.vt-plat-crosslinks {
+  border-top: 1px solid var(--subtle);
+  padding: 4rem 0;
+}
+
+.vt-plat-crosslinks-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.vt-plat-crosslinks-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.vt-plat-crosslinks-list {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.25rem 0.25rem 0.75rem;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 48px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 48px), transparent);
+}
+
+.vt-plat-crosslinks-list::-webkit-scrollbar { display: none; }
+
+.vt-plat-pill-link {
+  flex: 0 0 auto;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--subtle);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.vt-plat-pill-link:hover {
+  border-color: var(--lime);
+  background: rgba(157, 210, 32, 0.08);
+  transform: translateY(-2px);
+}
+
+/* CTA — elevated dark card -------------------------------------------------- */
+
+.vt-plat-cta-band {
+  padding: 1rem 2.5rem 6.5rem;
+}
+
+.vt-plat-cta-card {
+  position: relative;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 32px;
+  background: var(--ink);
+  padding: 4.5rem 3rem;
+  text-align: center;
+}
+
+.vt-plat-cta-card::before {
+  content: '';
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  top: -10rem;
+  right: -8rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(157, 210, 32, 0.3), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.vt-plat-cta-card h3 {
+  position: relative;
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.vt-plat-cta-card p {
+  position: relative;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 460px;
+  margin: 0 auto 1.85rem;
+  line-height: 1.7;
+}
+
+.vt-plat-cta-card a {
+  position: relative;
+  display: inline-block;
+  padding: 0.95rem 2.2rem;
+  background: var(--lime);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.vt-plat-cta-card a:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+/* RESPONSIVE ---------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .vt-plat-hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .vt-plat-hero-visual { order: -1; max-width: 260px; margin: 0 auto; }
+  .vt-plat-hero-copy { text-align: center; }
+  .vt-plat-hero h1 { max-width: none; margin: 0 auto; }
+  .vt-plat-hero-sub { margin-left: auto; margin-right: auto; }
+  .vt-plat-hero-actions { justify-content: center; }
+  .vt-plat-kicker { justify-content: center; }
+  .vt-plat-kicker::before { display: none; }
+}
+
+@media (max-width: 900px) {
+  .vt-plat-features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vt-plat-feature-card:first-child { grid-column: span 2; grid-row: span 1; }
+  .vt-plat-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 3rem; }
+  .vt-plat-steps::before { display: none; }
+}
+
+@media (max-width: 640px) {
+  .vt-plat-hero { padding: 8rem 1.25rem 3.5rem; }
+  .vt-plat-hero-card { max-width: 220px; padding: 1.5rem; }
+  .vt-plat-section { padding: 4rem 1.25rem; }
+  .vt-plat-section-head { margin-bottom: 2.5rem; }
+  .vt-plat-features-grid { grid-template-columns: 1fr; }
+  .vt-plat-feature-card:first-child { grid-column: span 1; }
+  .vt-plat-steps { grid-template-columns: 1fr; }
+  .vt-plat-crosslinks-inner { padding: 0 1.25rem; }
+  .vt-plat-cta-band { padding: 0 1.25rem 4rem; }
+  .vt-plat-cta-card { padding: 3rem 1.75rem; border-radius: 24px; }
+}

@@ -21,12 +21,12 @@ export const NAV_DROPDOWNS: NavDropdown[] = [
     groups: [
       {
         links: [
-          { label: "Performance Reviews", desc: "Calibration, talent reviews", href: "#" },
-          { label: "Goals & OKRs", desc: "Aligned objectives, real progress", href: "#" },
-          { label: "1:1s", desc: "Shared agendas, real follow-through", href: "#" },
-          { label: "Engagement", desc: "Surveys, eNPS, and action plans", href: "#" },
-          { label: "Grow", desc: "Career paths and development plans", href: "#" },
-          { label: "Reward & Recognition", desc: "Values-based praise and rewards", href: "#" },
+          { label: "Performance Reviews", desc: "Calibration, talent reviews", href: "/platform/performance-reviews" },
+          { label: "Goals & OKRs", desc: "Aligned objectives, real progress", href: "/platform/goals-okrs" },
+          { label: "1:1s", desc: "Shared agendas, real follow-through", href: "/platform/one-on-ones" },
+          { label: "Engagement", desc: "Surveys, eNPS, and action plans", href: "/platform/engagement" },
+          { label: "Grow", desc: "Career paths and development plans", href: "/platform/grow" },
+          { label: "Reward & Recognition", desc: "Values-based praise and rewards", href: "/platform/reward-recognition" },
         ],
         cta: { label: "Explore the platform →", href: "/explore-the-platform" },
       },
@@ -38,27 +38,27 @@ export const NAV_DROPDOWNS: NavDropdown[] = [
       {
         title: "Technology",
         links: [
-          { label: "Cloud Modernization", href: "#" },
-          { label: "Data & AI", href: "#" },
-          { label: "Application Modernization", href: "#" },
-          { label: "Managed Services", href: "#" },
+          { label: "Cloud Modernization", href: "/solutions/cloud-modernization" },
+          { label: "Data & AI", href: "/solutions/data-ai" },
+          { label: "Application Modernization", href: "/solutions/application-modernization" },
+          { label: "Managed Services", href: "/solutions/managed-services" },
         ],
       },
       {
         title: "Staffing",
         links: [
-          { label: "Permanent Placement", href: "#" },
-          { label: "Contract & Contract-to-Hire", href: "#" },
-          { label: "Executive Search", href: "#" },
-          { label: "Recruitment Process Outsourcing", href: "#" },
+          { label: "Permanent Placement", href: "/solutions/permanent-placement" },
+          { label: "Contract & Contract-to-Hire", href: "/solutions/contract-to-hire" },
+          { label: "Executive Search", href: "/solutions/executive-search" },
+          { label: "Recruitment Process Outsourcing", href: "/solutions/recruitment-process-outsourcing" },
         ],
       },
       {
         title: "Services",
         links: [
-          { label: "Solution Architecture", href: "#" },
-          { label: "Modernization Strategy", href: "#" },
-          { label: "Managed Services", href: "#" },
+          { label: "Solution Architecture", href: "/solutions/solution-architecture" },
+          { label: "Modernization Strategy", href: "/solutions/modernization-strategy" },
+          { label: "Managed Services", href: "/solutions/managed-services" },
         ],
       },
     ],
@@ -68,10 +68,10 @@ export const NAV_DROPDOWNS: NavDropdown[] = [
     groups: [
       {
         links: [
-          { label: "Healthcare", desc: "Keep care teams whole", href: "#" },
-          { label: "Retail & E-commerce", desc: "Frontline engagement, peak-ready", href: "#" },
-          { label: "Manufacturing", desc: "For the people who run the floor", href: "#" },
-          { label: "Technology", desc: "For fast-moving software teams", href: "#" },
+          { label: "Healthcare", desc: "Keep care teams whole", href: "/industries/healthcare" },
+          { label: "Retail & E-commerce", desc: "Frontline engagement, peak-ready", href: "/industries/retail-ecommerce" },
+          { label: "Manufacturing", desc: "For the people who run the floor", href: "/industries/manufacturing" },
+          { label: "Technology", desc: "For fast-moving software teams", href: "/industries/technology" },
         ],
         cta: { label: "All industries →", href: "#" },
       },
@@ -82,12 +82,12 @@ export const NAV_DROPDOWNS: NavDropdown[] = [
     groups: [
       {
         links: [
-          { label: "Performance Review Cycles", desc: "Fair reviews, on schedule", href: "#" },
-          { label: "Employee Retention", desc: "Keep the people you can't replace", href: "#" },
-          { label: "Company Goal Alignment", desc: "One strategy, every team", href: "#" },
-          { label: "Manager Effectiveness", desc: "Every manager, a better coach", href: "#" },
-          { label: "Onboarding & Ramp", desc: "Faster ramp, fewer early exits", href: "#" },
-          { label: "Recognition & Culture", desc: "Make great work visible", href: "#" },
+          { label: "Performance Review Cycles", desc: "Fair reviews, on schedule", href: "/use-cases/performance-review-cycles" },
+          { label: "Employee Retention", desc: "Keep the people you can't replace", href: "/use-cases/employee-retention" },
+          { label: "Company Goal Alignment", desc: "One strategy, every team", href: "/use-cases/company-goal-alignment" },
+          { label: "Manager Effectiveness", desc: "Every manager, a better coach", href: "/use-cases/manager-effectiveness" },
+          { label: "Onboarding & Ramp", desc: "Faster ramp, fewer early exits", href: "/use-cases/onboarding-ramp" },
+          { label: "Recognition & Culture", desc: "Make great work visible", href: "/use-cases/recognition-culture" },
         ],
         cta: { label: "All use cases →", href: "#" },
       },

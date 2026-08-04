@@ -1,0 +1,322 @@
+:root {
+  --ink: #0d0d0d;
+  --muted: #6b7280;
+  --subtle: #e5e7eb;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --lime: #9dd220f3;
+  --sans: 'Inter', sans-serif;
+  --serif: 'Inter', serif;
+}
+
+.vt-uc-page { background: var(--bg); min-height: 100vh; overflow-x: clip; }
+
+/* TOP RIBBON — dark, doubles as header backdrop + issue index --------------- */
+
+.vt-uc-topbar { background: var(--ink); padding: 6.5rem 2.5rem 1.5rem; }
+
+.vt-uc-topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.vt-uc-topbar-inner strong { color: rgba(255, 255, 255, 0.85); font-weight: 600; }
+.vt-uc-topbar-index { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+
+/* HERO — before/after headline --------------------------------------------- */
+
+.vt-uc-hero { background: var(--bg); padding: 4rem 2.5rem 4.5rem; }
+
+.vt-uc-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: ucFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes ucFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vt-uc-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+}
+
+.vt-uc-kicker::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+
+.vt-uc-before {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  text-decoration: line-through;
+  text-decoration-color: rgba(107, 114, 128, 0.45);
+  text-decoration-thickness: 2px;
+}
+
+.vt-uc-arrow-row { display: flex; align-items: center; margin: 0.6rem 0; }
+.vt-uc-arrow-row svg { width: 24px; height: 24px; color: var(--lime); }
+
+.vt-uc-after {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--lime);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+  max-width: 20ch;
+}
+
+.vt-uc-hero-sub {
+  margin-top: 1.75rem;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 54ch;
+}
+
+.vt-uc-hero a.vt-uc-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 2.25rem;
+  padding: 0.9rem 1.9rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.vt-uc-hero a.vt-uc-btn:hover { transform: translateY(-2px); opacity: 0.88; }
+
+/* METRIC CHIPS ---------------------------------------------------------------- */
+
+.vt-uc-chips { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 3rem; }
+
+.vt-uc-chip {
+  min-width: 190px;
+  padding: 1.1rem 1.35rem;
+  border-radius: 16px;
+  border: 1px solid var(--subtle);
+  background: var(--white);
+}
+
+.vt-uc-chip-row { display: flex; align-items: center; gap: 0.5rem; }
+
+.vt-uc-chip-before {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: rgba(107, 114, 128, 0.5);
+}
+
+.vt-uc-chip-arrow { width: 13px; height: 13px; color: var(--lime); flex-shrink: 0; }
+.vt-uc-chip-after { font-size: 0.92rem; font-weight: 700; color: var(--ink); }
+
+.vt-uc-chip-label {
+  margin-top: 0.55rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* PLAYBOOK ACCORDION ------------------------------------------------------------ */
+
+.vt-uc-playbook { max-width: 860px; margin: 0 auto; padding: 5.5rem 2.5rem; }
+
+.vt-uc-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.vt-uc-label::before { content: ''; width: 2rem; height: 1px; background: var(--muted); }
+
+.vt-uc-accordion { border-top: 1px solid var(--subtle); }
+
+.vt-uc-acc-item { border-bottom: 1px solid var(--subtle); }
+
+.vt-uc-acc-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.vt-uc-acc-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.vt-uc-acc-chevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--muted);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.vt-uc-acc-item.open .vt-uc-acc-chevron { transform: rotate(180deg); color: var(--lime); }
+
+.vt-uc-acc-body { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
+.vt-uc-acc-item.open .vt-uc-acc-body { max-height: 400px; }
+
+.vt-uc-acc-body-inner {
+  padding: 0 0 1.85rem;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 65ch;
+}
+
+/* IMPACT — one big number ---------------------------------------------------- */
+
+.vt-uc-impact { text-align: center; padding: 5rem 2.5rem; border-top: 1px solid var(--subtle); }
+
+.vt-uc-impact-value {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.vt-uc-impact-label {
+  margin-top: 1.1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.vt-uc-impact-tags { margin-top: 2rem; }
+
+.vt-uc-impact-tags-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.85rem;
+}
+
+.vt-uc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.vt-uc-tag {
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--subtle);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.vt-uc-tag:hover {
+  border-color: var(--lime);
+  background: rgba(157, 210, 32, 0.08);
+  transform: translateY(-2px);
+}
+
+/* CTA — bordered outline panel ------------------------------------------------ */
+
+.vt-uc-cta-wrap { padding: 1rem 2.5rem 6rem; }
+
+.vt-uc-cta-panel {
+  max-width: 780px;
+  margin: 0 auto;
+  border: 1.5px solid var(--lime);
+  border-radius: 28px;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  background: var(--white);
+}
+
+.vt-uc-cta-panel h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+
+.vt-uc-cta-panel p { font-size: 0.92rem; color: var(--muted); margin-bottom: 1.85rem; }
+
+.vt-uc-cta-panel a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.vt-uc-cta-panel a:hover { transform: translateY(-2px); opacity: 0.88; }
+
+/* RESPONSIVE ------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .vt-uc-topbar { padding: 6rem 1.25rem 1.25rem; }
+  .vt-uc-hero { padding: 2.75rem 1.25rem 3.25rem; }
+  .vt-uc-playbook { padding: 3.5rem 1.25rem; }
+  .vt-uc-impact { padding: 3.5rem 1.25rem; }
+  .vt-uc-cta-wrap { padding: 0.5rem 1.25rem 4rem; }
+  .vt-uc-cta-panel { padding: 2.75rem 1.5rem; border-radius: 22px; }
+  .vt-uc-chip { min-width: 100%; }
+}
