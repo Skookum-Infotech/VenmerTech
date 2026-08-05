@@ -105,6 +105,7 @@ section { scroll-margin-top: 5rem; }
   font-weight: 400;
   letter-spacing: 0.02em;
   color: rgba(255, 255, 255, 0.8);
+  text-align: center;
   transition: color 0.25s ease;
 }
 
@@ -499,7 +500,7 @@ section { scroll-margin-top: 5rem; }
 }
 
 .vt-logo-text {
-  font-size: 1.45rem;
+  font-size: 1.64rem;
 }
 
 .vt-logo-tagline {
