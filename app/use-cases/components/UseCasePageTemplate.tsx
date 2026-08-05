@@ -5,89 +5,117 @@ import Footer from "../../components/layout/Footer";
 import "../../page.css";
 import "../use-cases.css";
 import { getUseCasePage, USE_CASE_PAGES } from "../use-cases-data";
+import { Icon } from "../../components/icons";
 import RevealOnScroll from "../../components/RevealOnScroll";
-import PlaybookAccordion from "./PlaybookAccordion";
 
 export default function UseCasePageTemplate({ slug }: { slug: string }) {
   const content = getUseCasePage(slug);
   if (!content) notFound();
 
-  const index = USE_CASE_PAGES.findIndex((p) => p.slug === slug) + 1;
-  const total = USE_CASE_PAGES.length;
+  const otherPages = USE_CASE_PAGES.filter((p) => p.slug !== slug);
 
   return (
     <div className="vt-uc-page">
       <Header />
 
-      <div className="vt-uc-topbar">
-        <div className="vt-uc-topbar-inner">
-          <span>
-            Use Cases / <strong>{content.navLabel}</strong>
-          </span>
-          <span className="vt-uc-topbar-index">
-            {String(index).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </span>
-        </div>
-      </div>
+      <div className="vt-uc-topbar" />
 
       <section className="vt-uc-hero">
+        <span className="vt-uc-watermark" aria-hidden="true">
+          {content.navLabel}
+        </span>
         <div className="vt-uc-hero-inner">
           <p className="vt-uc-kicker">Use Case</p>
-          <span className="vt-uc-before">{content.beforePhrase}</span>
-          <span className="vt-uc-arrow-row" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-          <span className="vt-uc-after">{content.afterPhrase}</span>
+          <h1>{content.title}</h1>
           <p className="vt-uc-hero-sub">{content.subtitle}</p>
           <Link href="/#contact" className="vt-uc-btn">
             Get in Touch →
           </Link>
-
-          <div className="vt-uc-chips">
-            {content.metrics.map((m) => (
-              <div key={m.label} className="vt-uc-chip">
-                <div className="vt-uc-chip-row">
-                  <span className="vt-uc-chip-before">{m.before}</span>
-                  <svg className="vt-uc-chip-arrow" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span className="vt-uc-chip-after">{m.after}</span>
-                </div>
-                <div className="vt-uc-chip-label">{m.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
-      <RevealOnScroll className="vt-uc-playbook">
-        <p className="vt-uc-label">The Playbook</p>
-        <PlaybookAccordion items={content.playbook} />
-      </RevealOnScroll>
+      <div className="vt-uc-body">
+        <aside className="vt-uc-sidebar">
+          <div>
+            <p className="vt-uc-sidebar-label">Related Use Cases</p>
+            <div className="vt-uc-sidebar-list">
+              {otherPages.map((p) => (
+                <Link key={p.slug} href={`/use-cases/${p.slug}`} className="vt-uc-sidebar-link">
+                  {p.navLabel}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="vt-uc-sidebar-card">
+            <h4>Need a custom scope?</h4>
+            <p>Every engagement starts with a conversation, not a fixed package.</p>
+            <Link href="/#contact">Talk to Us →</Link>
+          </div>
+        </aside>
 
-      <RevealOnScroll className="vt-uc-impact">
-        <div className="vt-uc-impact-value">{content.impactValue}</div>
-        <div className="vt-uc-impact-label">{content.impactLabel}</div>
-        <div className="vt-uc-impact-tags">
-          <span className="vt-uc-impact-tags-label">Built With</span>
-          <div className="vt-uc-tags">
-            {content.tags.map((t) => (
-              <Link key={t.label} href={t.href} className="vt-uc-tag">
-                {t.label}
+        <main className="vt-uc-main">
+          <div className="vt-uc-mobile-siblings">
+            {otherPages.map((p) => (
+              <Link key={p.slug} href={`/use-cases/${p.slug}`}>
+                {p.navLabel}
               </Link>
             ))}
           </div>
-        </div>
-      </RevealOnScroll>
 
-      <RevealOnScroll className="vt-uc-cta-wrap">
-        <div className="vt-uc-cta-panel">
-          <h3>{content.ctaHeading}</h3>
-          <p>{content.ctaBody}</p>
-          <Link href="/#contact">Get in Touch →</Link>
-        </div>
+          <RevealOnScroll className="vt-uc-overview">
+            <p className="vt-uc-block-label">Overview</p>
+            <p>{content.overview}</p>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <p className="vt-uc-block-label">What We Deliver</p>
+            <div className="vt-uc-capabilities-grid">
+              {content.capabilities.map((c) => (
+                <div key={c.title} className="vt-uc-cap">
+                  <div className="vt-uc-cap-icon">
+                    <Icon name={c.icon} />
+                  </div>
+                  <div>
+                    <div className="vt-uc-cap-title">{c.title}</div>
+                    <div className="vt-uc-cap-desc">{c.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <p className="vt-uc-block-label">Our Approach</p>
+            <div className="vt-uc-timeline">
+              {content.approach.map((step) => (
+                <div key={step.title} className="vt-uc-timeline-item">
+                  <div className="vt-uc-timeline-title">{step.title}</div>
+                  <div className="vt-uc-timeline-desc">{step.desc}</div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <p className="vt-uc-block-label">Outcomes</p>
+            <div className="vt-uc-outcomes">
+              {content.outcomes.map((o) => (
+                <div key={o.label} className="vt-uc-outcome">
+                  <div className="vt-uc-outcome-value">{o.value}</div>
+                  <div className="vt-uc-outcome-label">{o.label}</div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+        </main>
+      </div>
+
+      <RevealOnScroll className="vt-uc-cta">
+        <h3>{content.ctaHeading}</h3>
+        <p>{content.ctaBody}</p>
+        <Link href="/#contact" className="vt-uc-btn">
+          Get in Touch →
+        </Link>
       </RevealOnScroll>
 
       <Footer />

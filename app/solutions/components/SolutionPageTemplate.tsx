@@ -13,43 +13,24 @@ export default function SolutionPageTemplate({ slug }: { slug: string }) {
   if (!content) notFound();
 
   const related = getRelatedSolutions(content);
-  const groupLabel = content.groups.join(" & ");
 
   return (
     <div className="vt-sol-page">
       <Header />
 
-      <div className="vt-sol-topbar">
-        <div className="vt-sol-topbar-inner">
-          <span>Solutions</span>
-          <span>/</span>
-          <span>{groupLabel}</span>
-          <span>/</span>
-          <span className="current">{content.navLabel}</span>
-        </div>
-      </div>
+      <div className="vt-sol-topbar" />
 
       <section className="vt-sol-hero">
+        <span className="vt-sol-watermark" aria-hidden="true">
+          {content.navLabel}
+        </span>
         <div className="vt-sol-hero-inner">
-          <p className="vt-sol-pill">{groupLabel}</p>
+          <p className="vt-sol-kicker">Solutions</p>
           <h1>{content.title}</h1>
           <p className="vt-sol-hero-sub">{content.subtitle}</p>
-          <div className="vt-sol-hero-actions">
-            <Link href="/#contact" className="vt-sol-btn-primary">
-              Get in Touch →
-            </Link>
-            <a href="#overview" className="vt-sol-btn-ghost">
-              See how it works
-            </a>
-          </div>
-          <div className="vt-sol-hero-stats">
-            {content.heroStats.map((s) => (
-              <div key={s.label}>
-                <div className="vt-sol-stat-value">{s.value}</div>
-                <div className="vt-sol-stat-label">{s.label}</div>
-              </div>
-            ))}
-          </div>
+          <Link href="/#contact" className="vt-sol-btn-primary">
+            Get in Touch →
+          </Link>
         </div>
       </section>
 
@@ -85,7 +66,7 @@ export default function SolutionPageTemplate({ slug }: { slug: string }) {
             ))}
           </div>
 
-          <RevealOnScroll id="overview" className="vt-sol-overview">
+          <RevealOnScroll className="vt-sol-overview">
             <p className="vt-sol-block-label">Overview</p>
             <p>{content.overview}</p>
           </RevealOnScroll>

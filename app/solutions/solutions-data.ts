@@ -24,7 +24,6 @@ export interface SolutionPageContent {
   groups: SolutionGroup[];
   title: string;
   subtitle: string;
-  heroStats: SolutionStat[];
   overview: string;
   capabilities: SolutionCapability[];
   approach: SolutionApproachStep[];
@@ -41,10 +40,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     title: "Modernize your cloud, without the migration headaches.",
     subtitle:
       "Move faster, cut infrastructure cost, and rebuild for scale — with a team that's done this before.",
-    heroStats: [
-      { value: "50+", label: "Migrations completed" },
-      { value: "30%", label: "Avg. infra cost reduction" },
-    ],
     overview:
       "We help enterprises move off legacy infrastructure and onto modern, scalable cloud platforms — without disrupting the business along the way. From assessment to cutover, our team plans the migration path, modernizes the architecture, and hands off a system your team can actually run.",
     capabilities: [
@@ -75,10 +70,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Technology"],
     title: "Turn scattered data into decisions you can act on.",
     subtitle: "Data engineering, analytics, and applied AI built for how your business actually runs.",
-    heroStats: [
-      { value: "100+ TB", label: "Data pipelines managed" },
-      { value: "15+", label: "AI models shipped" },
-    ],
     overview:
       "Most organizations don't have a data problem — they have a data access problem. We build the pipelines, warehouses, and applied AI systems that turn raw data into something your teams can query, trust, and act on.",
     capabilities: [
@@ -109,10 +100,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Technology"],
     title: "Legacy systems, rebuilt for how your business runs today.",
     subtitle: "Modernize monoliths into scalable, maintainable systems — without a risky big-bang rewrite.",
-    heroStats: [
-      { value: "40+", label: "Applications modernized" },
-      { value: "12 yrs", label: "Avg. legacy system age" },
-    ],
     overview:
       "Legacy applications don't need to be thrown away — they need a path forward. We modernize incrementally, breaking monoliths into services, upgrading stacks, and closing the gap between what your systems do and what your business needs.",
     capabilities: [
@@ -143,10 +130,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Technology", "Services"],
     title: "An extension of your team, not another vendor to manage.",
     subtitle: "Ongoing monitoring, support, and optimization so your systems stay reliable long after launch.",
-    heroStats: [
-      { value: "24/7", label: "Coverage" },
-      { value: "99.9%", label: "SLA uptime" },
-    ],
     overview:
       "Shipping the system is the easy part — running it reliably for years is the real work. Our managed services team monitors, maintains, and continuously improves your systems, so your team can focus on what's next instead of firefighting.",
     capabilities: [
@@ -177,10 +160,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Staffing"],
     title: "Full-time hires who fit the team, not just the job description.",
     subtitle: "Direct-hire recruiting for technology roles, backed by a network we've built over a decade.",
-    heroStats: [
-      { value: "500+", label: "Placements made" },
-      { value: "45 days", label: "Avg. time to hire" },
-    ],
     overview:
       "Permanent hiring is a long-term bet — we treat it that way. Our recruiters go beyond keyword matching to understand team dynamics, technical depth, and culture fit, so the hires you make actually stick.",
     capabilities: [
@@ -211,10 +190,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Staffing"],
     title: "Flexible talent, without the long-term risk.",
     subtitle: "Bring in vetted technologists on contract — and convert to full-time when it's the right fit.",
-    heroStats: [
-      { value: "300+", label: "Contractors placed" },
-      { value: "2 wks", label: "Avg. time to start" },
-    ],
     overview:
       "Sometimes you need capacity fast, or you want to see the fit before committing long-term. Our contract and contract-to-hire staffing gets skilled technologists into your team quickly, with a clear path to conversion when it makes sense.",
     capabilities: [
@@ -245,10 +220,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Staffing"],
     title: "Leadership hires that shape where the company goes next.",
     subtitle: "Confidential, high-touch search for technology leadership and executive roles.",
-    heroStats: [
-      { value: "80+", label: "Executives placed" },
-      { value: "6 wks", label: "Avg. search time" },
-    ],
     overview:
       "Executive hires carry outsized weight — one wrong fit can cost years. Our search process is deliberate and confidential, built around a deep understanding of the role, the team, and where the company is headed.",
     capabilities: [
@@ -279,10 +250,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Staffing"],
     title: "Your recruiting team, running at your standards, at scale.",
     subtitle: "End-to-end RPO for companies that need to hire fast without building an internal team from scratch.",
-    heroStats: [
-      { value: "10+", label: "Programs run" },
-      { value: "3x", label: "Faster hiring at scale" },
-    ],
     overview:
       "When hiring volume outpaces your internal recruiting capacity, RPO fills the gap. We embed as your recruiting function — sourcing, screening, and managing the pipeline under your employer brand and standards.",
     capabilities: [
@@ -313,10 +280,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Services"],
     title: "The blueprint before the build.",
     subtitle: "Solution architecture that gets the hard decisions right before a single line of code ships.",
-    heroStats: [
-      { value: "60+", label: "Architectures delivered" },
-      { value: "0", label: "Major rework projects" },
-    ],
     overview:
       "The cost of an architecture mistake compounds every sprint it goes unnoticed. We design the system architecture up front — data flow, integration points, scalability, and failure modes — so your team builds on solid ground.",
     capabilities: [
@@ -347,10 +310,6 @@ export const SOLUTION_PAGES: SolutionPageContent[] = [
     groups: ["Services"],
     title: "A modernization roadmap you can actually execute.",
     subtitle: "Strategic planning that turns ‘we should modernize’ into a sequenced, funded plan.",
-    heroStats: [
-      { value: "35+", label: "Roadmaps delivered" },
-      { value: "6 wks", label: "Avg. engagement" },
-    ],
     overview:
       "Modernization fails more often from lack of sequencing than lack of ambition. We assess your current systems, prioritize by risk and impact, and build a roadmap your team and budget can actually follow through on.",
     capabilities: [

@@ -4,32 +4,21 @@ import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import "../../page.css";
 import "../industries.css";
-import { getIndustryPage, getNextIndustry, INDUSTRY_PAGES } from "../industries-data";
+import { getIndustryPage, INDUSTRY_PAGES } from "../industries-data";
+import { Icon } from "../../components/icons";
 import RevealOnScroll from "../../components/RevealOnScroll";
 
 export default function IndustryPageTemplate({ slug }: { slug: string }) {
   const content = getIndustryPage(slug);
   if (!content) notFound();
 
-  const next = getNextIndustry(slug);
+  const otherPages = INDUSTRY_PAGES.filter((p) => p.slug !== slug);
 
   return (
     <div className="vt-ind-page">
       <Header />
 
-      <nav className="vt-ind-tabbar">
-        <div className="vt-ind-tabbar-inner">
-          {INDUSTRY_PAGES.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/industries/${p.slug}`}
-              className={`vt-ind-tab${p.slug === content.slug ? " active" : ""}`}
-            >
-              {p.navLabel}
-            </Link>
-          ))}
-        </div>
-      </nav>
+      <div className="vt-ind-topbar" />
 
       <section className="vt-ind-hero">
         <span className="vt-ind-watermark" aria-hidden="true">
@@ -45,81 +34,89 @@ export default function IndustryPageTemplate({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <RevealOnScroll className="vt-ind-pair-section">
-        <div className="vt-ind-pair-grid">
-          <div className="vt-ind-pair-col">
-            <p className="vt-ind-pair-heading">The Challenge</p>
-            {content.challenges.map((c) => (
-              <div key={c.title} className="vt-ind-pair-item">
-                <span className="vt-ind-pair-marker minus">×</span>
-                <div>
-                  <div className="vt-ind-pair-title">{c.title}</div>
-                  <div className="vt-ind-pair-desc">{c.desc}</div>
-                </div>
-              </div>
+      <div className="vt-ind-body">
+        <aside className="vt-ind-sidebar">
+          <div>
+            <p className="vt-ind-sidebar-label">Related Industries</p>
+            <div className="vt-ind-sidebar-list">
+              {otherPages.map((p) => (
+                <Link key={p.slug} href={`/industries/${p.slug}`} className="vt-ind-sidebar-link">
+                  {p.navLabel}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="vt-ind-sidebar-card">
+            <h4>Need a custom scope?</h4>
+            <p>Every engagement starts with a conversation, not a fixed package.</p>
+            <Link href="/#contact">Talk to Us →</Link>
+          </div>
+        </aside>
+
+        <main className="vt-ind-main">
+          <div className="vt-ind-mobile-siblings">
+            {otherPages.map((p) => (
+              <Link key={p.slug} href={`/industries/${p.slug}`}>
+                {p.navLabel}
+              </Link>
             ))}
           </div>
-          <div className="vt-ind-pair-col">
-            <p className="vt-ind-pair-heading">How We Help</p>
-            {content.solutions.map((s) => (
-              <div key={s.title} className="vt-ind-pair-item">
-                <span className="vt-ind-pair-marker check">✓</span>
-                <div>
-                  <div className="vt-ind-pair-title">{s.title}</div>
-                  <div className="vt-ind-pair-desc">{s.desc}</div>
+
+          <RevealOnScroll className="vt-ind-overview">
+            <p className="vt-ind-block-label">Overview</p>
+            <p>{content.overview}</p>
+          </RevealOnScroll>
+
+          <RevealOnScroll>
+            <p className="vt-ind-block-label">What We Deliver</p>
+            <div className="vt-ind-capabilities-grid">
+              {content.capabilities.map((c) => (
+                <div key={c.title} className="vt-ind-cap">
+                  <div className="vt-ind-cap-icon">
+                    <Icon name={c.icon} />
+                  </div>
+                  <div>
+                    <div className="vt-ind-cap-title">{c.title}</div>
+                    <div className="vt-ind-cap-desc">{c.desc}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </RevealOnScroll>
+              ))}
+            </div>
+          </RevealOnScroll>
 
-      <RevealOnScroll className="vt-ind-tags-section">
-        <p className="vt-ind-label">Relevant Solutions</p>
-        <div className="vt-ind-tags">
-          {content.tags.map((t) => (
-            <Link key={t.label} href={t.href} className="vt-ind-tag">
-              {t.label}
-            </Link>
-          ))}
-        </div>
-      </RevealOnScroll>
+          <RevealOnScroll>
+            <p className="vt-ind-block-label">Our Approach</p>
+            <div className="vt-ind-timeline">
+              {content.approach.map((step) => (
+                <div key={step.title} className="vt-ind-timeline-item">
+                  <div className="vt-ind-timeline-title">{step.title}</div>
+                  <div className="vt-ind-timeline-desc">{step.desc}</div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
 
-      <RevealOnScroll className="vt-ind-quote-band">
-        <div className="vt-ind-quote-mark">&ldquo;</div>
-        <p className="vt-ind-quote-text">{content.quoteText}</p>
-        <p className="vt-ind-quote-attr">{content.quoteAttribution}</p>
-      </RevealOnScroll>
-
-      <RevealOnScroll className="vt-ind-stats-strip">
-        {content.stats.map((s) => (
-          <div key={s.label}>
-            <div className="vt-ind-stat-value">{s.value}</div>
-            <div className="vt-ind-stat-label">{s.label}</div>
-          </div>
-        ))}
-      </RevealOnScroll>
-
-      <div className="vt-ind-cta">
-        <h3>{content.ctaHeading}</h3>
-        <Link href="/#contact" className="vt-ind-btn">
-          {content.ctaBody}
-        </Link>
+          <RevealOnScroll>
+            <p className="vt-ind-block-label">Outcomes</p>
+            <div className="vt-ind-outcomes">
+              {content.outcomes.map((o) => (
+                <div key={o.label} className="vt-ind-outcome">
+                  <div className="vt-ind-outcome-value">{o.value}</div>
+                  <div className="vt-ind-outcome-label">{o.label}</div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+        </main>
       </div>
 
-      <Link href={`/industries/${next.slug}`} className="vt-ind-next">
-        <div className="vt-ind-next-inner">
-          <div>
-            <p className="vt-ind-next-label">Next Industry</p>
-            <p className="vt-ind-next-name">{next.navLabel}</p>
-          </div>
-          <span className="vt-ind-next-arrow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-        </div>
-      </Link>
+      <RevealOnScroll className="vt-ind-cta">
+        <h3>{content.ctaHeading}</h3>
+        <p>{content.ctaBody}</p>
+        <Link href="/#contact" className="vt-ind-btn">
+          Get in Touch →
+        </Link>
+      </RevealOnScroll>
 
       <Footer />
     </div>
