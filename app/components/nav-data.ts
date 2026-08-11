@@ -36,30 +36,19 @@ export const NAV_DROPDOWNS: NavDropdown[] = [
     label: "Solutions",
     groups: [
       {
-        title: "Technology",
         links: [
-          { label: "Cloud Modernization", href: "/solutions/cloud-modernization" },
-          { label: "Data & AI", href: "/solutions/data-ai" },
-          { label: "Application Modernization", href: "/solutions/application-modernization" },
-          { label: "Managed Services", href: "/solutions/managed-services" },
+          { label: "Cloud Modernization", desc: "Migrate, modernize, and scale", href: "/solutions/cloud-modernization" },
+          { label: "Data & AI", desc: "Turn data into decisions", href: "/solutions/data-ai" },
+          { label: "Application Modernization", desc: "Legacy systems, reimagined", href: "/solutions/application-modernization" },
+          { label: "Managed Services", desc: "Day-to-day IT, fully managed", href: "/solutions/managed-services" },
+          { label: "Permanent Placement", desc: "The right hire, built to last", href: "/solutions/permanent-placement" },
+          { label: "Contract & Contract-to-Hire", desc: "Flexible talent, when you need it", href: "/solutions/contract-to-hire" },
+          { label: "Executive Search", desc: "Leadership hires that fit", href: "/solutions/executive-search" },
+          { label: "Recruitment Process Outsourcing", desc: "Your hiring engine, outsourced", href: "/solutions/recruitment-process-outsourcing" },
+          { label: "Solution Architecture", desc: "Blueprints for complex systems", href: "/solutions/solution-architecture" },
+          { label: "Modernization Strategy", desc: "A clear plan to get there", href: "/solutions/modernization-strategy" },
         ],
-      },
-      {
-        title: "Staffing",
-        links: [
-          { label: "Permanent Placement", href: "/solutions/permanent-placement" },
-          { label: "Contract & Contract-to-Hire", href: "/solutions/contract-to-hire" },
-          { label: "Executive Search", href: "/solutions/executive-search" },
-          { label: "Recruitment Process Outsourcing", href: "/solutions/recruitment-process-outsourcing" },
-        ],
-      },
-      {
-        title: "Services",
-        links: [
-          { label: "Solution Architecture", href: "/solutions/solution-architecture" },
-          { label: "Modernization Strategy", href: "/solutions/modernization-strategy" },
-          { label: "Managed Services", href: "/solutions/managed-services" },
-        ],
+        cta: { label: "All solutions →", href: "#" },
       },
     ],
   },

@@ -1,37 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { handleHashNav } from "../nav-data";
 import Image from "next/image";
 
-const USEFUL_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Careers", href: "/careers" },
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+const PLATFORM_LINKS: FooterLink[] = [
+  { label: "Performance Reviews", href: "/platform/performance-reviews" },
+  { label: "Goals & OKRs", href: "/platform/goals-okrs" },
+  { label: "1:1s", href: "/platform/one-on-ones" },
+  { label: "Engagement", href: "/platform/engagement" },
+  { label: "Reward & Recognition", href: "/platform/reward-recognition" },
 ];
 
-const SERVICE_LINKS = [
-  "Application Development",
-  "Web Design and Maintenance",
-  "Application Support",
-  "Talent Acquisition",
+const SOLUTIONS_LINKS: FooterLink[] = [
+  { label: "Cloud Modernization", href: "/solutions/cloud-modernization" },
+  { label: "Data & AI", href: "/solutions/data-ai" },
+  { label: "Application Modernization", href: "/solutions/application-modernization" },
+  { label: "Permanent Placement", href: "/solutions/permanent-placement" },
+  { label: "Executive Search", href: "/solutions/executive-search" },
 ];
+
+const INDUSTRIES_LINKS: FooterLink[] = [
+  { label: "Healthcare", href: "/industries/healthcare" },
+  { label: "Retail & E-commerce", href: "/industries/retail-ecommerce" },
+  { label: "Manufacturing", href: "/industries/manufacturing" },
+  { label: "Technology", href: "/industries/technology" },
+];
+
+function FooterLinkList({ links }: { links: FooterLink[] }) {
+  return (
+    <ul className="vt-footer-list">
+      {links.map((l) => (
+        <li key={l.label}>
+          <Link href={l.href}>{l.label}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function Footer() {
   const year = new Date().getFullYear();
-
-  function handleClick(e: React.MouseEvent, href: string) {
-    const hash = href.startsWith("/#")
-      ? href.slice(1)
-      : href.startsWith("#")
-        ? href
-        : null;
-    if (hash) {
-      e.preventDefault();
-      handleHashNav(hash);
-    }
-  }
 
   return (
     <footer className="vt-footer-wrap">
@@ -60,6 +73,21 @@ export default function Footer() {
             Outsourcing Company, that delivers solutions to enable its clients
             do business better.
           </p>
+          <ul className="vt-footer-list vt-footer-contact">
+            <li>
+              2501 Lakeside Pkwy
+              <br />
+              Flower Mound, TX 75022-4180
+              <br />
+              United States
+            </li>
+            <li>
+              <a href="tel:+19402631641">+1(940)240.6962</a>
+            </li>
+            <li>
+              <a href="mailto:info@venmertech.com">info@venmertech.com</a>
+            </li>
+          </ul>
           <div className="vt-footer-social">
             <a
               href="https://www.linkedin.com/company/venmertech/"
@@ -89,54 +117,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="vt-footer-col">
-          <h4 className="vt-footer-heading">Useful Links</h4>
-          <ul className="vt-footer-list">
-            {USEFUL_LINKS.map((l) => (
-              <li key={l.label}>
-                <Link href={l.href} onClick={(e) => handleClick(e, l.href)}>
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div className="vt-footer-links-group">
+          <div className="vt-footer-col">
+            <h4 className="vt-footer-heading">Platform</h4>
+            <FooterLinkList links={PLATFORM_LINKS} />
+          </div>
 
-        <div className="vt-footer-col">
-          <h4 className="vt-footer-heading">Our Services</h4>
-          <ul className="vt-footer-list">
-            {SERVICE_LINKS.map((s) => (
-              <li key={s}>
-                <Link
-                  href="/#services"
-                  onClick={(e) => handleClick(e, "/#services")}
-                >
-                  {s}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="vt-footer-col">
+            <h4 className="vt-footer-heading">Solutions</h4>
+            <FooterLinkList links={SOLUTIONS_LINKS} />
+          </div>
 
-        <div className="vt-footer-col">
-          <h4 className="vt-footer-heading">Contact Us</h4>
-          <ul className="vt-footer-list vt-footer-contact">
-            <li>
-              2501 Lakeside Pkwy
-              <br />
-              Flower Mound, TX 75022-4180
-              <br />
-              United States
-            </li>
-            <li>
-              <a href="tel:+19402631641">Phone: +1(940)240.6962</a>
-            </li>
-            <li>
-              <a href="mailto:info@venmertech.com">
-                Email: info@venmertech.com
-              </a>
-            </li>
-          </ul>
+          <div className="vt-footer-col">
+            <h4 className="vt-footer-heading">Industries</h4>
+            <FooterLinkList links={INDUSTRIES_LINKS} />
+          </div>
         </div>
       </div>
 
