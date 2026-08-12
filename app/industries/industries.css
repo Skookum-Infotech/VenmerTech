@@ -411,3 +411,39 @@
   .vt-ind-outcome + .vt-ind-outcome { border-left: none; border-top: 1px solid var(--subtle); }
   .vt-ind-cta { padding: 3.5rem 1.25rem 4.5rem; }
 }
+
+/* INDEX PAGE — all industries -------------------------------------------------- */
+
+.vt-ind-index-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem 6rem;
+}
+
+.vt-ind-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.vt-ind-index-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid var(--subtle);
+  background: var(--white);
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.vt-ind-index-card:hover { border-color: var(--lime); transform: translateY(-2px); }
+
+.vt-ind-index-card-title { font-size: 1.02rem; font-weight: 700; color: var(--ink); }
+.vt-ind-index-card-desc { font-size: 0.85rem; line-height: 1.65; color: var(--muted); }
+.vt-ind-index-card-arrow { margin-top: auto; font-size: 0.8rem; font-weight: 700; color: var(--ink); padding-top: 0.4rem; }
+
+@media (max-width: 640px) {
+  .vt-ind-index-body { padding: 3rem 1.25rem 4rem; }
+}
