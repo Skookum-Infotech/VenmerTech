@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:     #0d0d0d;
+  --muted:   #6b7280;
+  --subtle:  #e5e7eb;
+  --bg:      #f8fafc;
+  --white:   #ffffff;
+  --accent:  #1a1a1a;
+  --lime:    #9dd220f3;
+  --sans: 'Inter', sans-serif;
+  --serif: 'Inter', serif;
+}
+
+.vt-404-page {
+  background: var(--ink);
+  min-height: 100vh;
+}
+
+.vt-404 {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 6rem;
+}
+
+.vt-404-inner {
+  max-width: 720px;
+}
+
+.vt-404-code {
+  font-family: var(--serif);
+  font-size: clamp(6rem, 20vw, 14rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--lime);
+}
+
+.vt-404-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-top: 1.25rem;
+}
+
+.vt-404-desc {
+  margin: 1.25rem auto 0;
+  max-width: 460px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.vt-404-btn {
+  display: inline-block;
+  margin-top: 2.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.95rem 2.25rem;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--white);
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.vt-404-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+@media (max-width: 768px) {
+  .vt-404 {
+    padding: 7rem 1.25rem 4rem;
+  }
+}

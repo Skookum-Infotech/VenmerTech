@@ -6,6 +6,64 @@ import Footer from "./components/layout/Footer";
 import { scrollTo } from "./components/nav-data";
 import "./page.css";
 
+const SIGNAL_LINE_TILE_WIDTH = 600;
+const SIGNAL_LINE_HEIGHT = 120;
+
+function wavePath(amplitude: number, cycles: number, phase: number) {
+  const steps = 100;
+  const midY = SIGNAL_LINE_HEIGHT / 2;
+  let d = "";
+  for (let i = 0; i <= steps; i++) {
+    const x = (i / steps) * SIGNAL_LINE_TILE_WIDTH;
+    const y =
+      midY +
+      amplitude * Math.sin((i / steps) * cycles * Math.PI * 2 + phase);
+    d += `${i === 0 ? "M" : " L"}${x.toFixed(2)},${y.toFixed(2)}`;
+  }
+  return d;
+}
+
+const signalLines = [
+  { amplitude: 24, cycles: 5, phase: 1.4, top: "10%", duration: "72s", bright: true },
+];
+
+function useInView<T extends HTMLElement>(threshold = 0.2) {
+  const ref = useRef<T | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold },
+    );
+
+    observer.observe(el);
+
+    // Fail-safe: content must never stay stranded at opacity 0 because the
+    // observer didn't deliver (background/throttled tabs pause the rendering
+    // lifecycle that IntersectionObserver callbacks depend on).
+    const fallback = window.setTimeout(() => {
+      setVisible(true);
+      observer.disconnect();
+    }, 3000);
+
+    return () => {
+      window.clearTimeout(fallback);
+      observer.disconnect();
+    };
+  }, [threshold]);
+
+  return [ref, visible] as const;
+}
+
 function ContactForm() {
   const [form, setForm] = useState({
     name: "",
@@ -13,7 +71,9 @@ function ContactForm() {
     company: "",
     message: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -38,64 +98,112 @@ function ContactForm() {
       // attempt to parse JSON response if present
       try {
         await res.json();
-      } catch (_) {
+      } catch {
         // ignore parse errors — success indicated by HTTP status
       }
 
       setStatus("sent");
     } catch (err) {
       console.error("Contact form submit error:", err);
-      setStatus("idle");
-      // keep UX simple for now
-      alert("Something went wrong sending your message. Please try again.");
+      setStatus("error");
     }
   };
   return (
-    <form onSubmit={submit} className="vt-form">
+    <form onSubmit={submit} className="vt-form" noValidate>
       <div className="vt-form-row">
+        <div className="vt-field">
+          <label className="vt-field-label" htmlFor="cf-name">
+            Full name
+          </label>
+          <input
+            id="cf-name"
+            className="vt-input"
+            name="name"
+            placeholder="Enter your full name"
+            value={form.name}
+            onChange={handle}
+            required
+          />
+        </div>
+        <div className="vt-field">
+          <label className="vt-field-label" htmlFor="cf-email">
+            Email
+          </label>
+          <input
+            id="cf-email"
+            className="vt-input"
+            name="email"
+            placeholder="username@company.com"
+            type="email"
+            value={form.email}
+            onChange={handle}
+            required
+          />
+        </div>
+      </div>
+      <div className="vt-field">
+        <label className="vt-field-label" htmlFor="cf-company">
+          Company <span className="vt-field-optional">(optional)</span>
+        </label>
         <input
+          id="cf-company"
           className="vt-input"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
+          name="company"
+          placeholder="Enter Company Name"
+          value={form.company}
           onChange={handle}
-          required
         />
-        <input
-          className="vt-input"
-          name="email"
-          placeholder="Email"
-          type="email"
-          value={form.email}
+      </div>
+      <div className="vt-field">
+        <label className="vt-field-label" htmlFor="cf-message">
+          Message
+        </label>
+        <textarea
+          id="cf-message"
+          className="vt-input vt-textarea"
+          name="message"
+          placeholder="Tell us about your inquiry"
+          rows={5}
+          value={form.message}
           onChange={handle}
           required
         />
       </div>
-      <input
-        className="vt-input"
-        name="company"
-        placeholder="Company (optional)"
-        value={form.company}
-        onChange={handle}
-      />
-      <textarea
-        className="vt-input vt-textarea"
-        name="message"
-        placeholder="Tell us about your project…"
-        rows={5}
-        value={form.message}
-        onChange={handle}
-        required
-      />
       <button
         type="submit"
-        disabled={status !== "idle"}
+        disabled={status === "sending" || status === "sent"}
         className="vt-btn-primary"
       >
-        {status === "idle" && "Send Message →"}
-        {status === "sending" && "Sending…"}
-        {status === "sent" && "✓ Sent!"}
+        {status === "idle" && (
+          <>
+            Send message <span className="vt-btn-arrow">→</span>
+          </>
+        )}
+        {status === "sending" && (
+          <>
+            Sending
+            <span className="vt-dots" aria-hidden="true">
+              ···
+            </span>
+          </>
+        )}
+        {status === "sent" && (
+          <>
+            Sent <span aria-hidden="true">✓</span>
+          </>
+        )}
+        {status === "error" && (
+          <>
+            Try again <span className="vt-btn-arrow">→</span>
+          </>
+        )}
       </button>
+
+      {status === "error" && (
+        <p className="vt-form-error" role="alert">
+          Something went wrong sending your message. Please try again.
+        </p>
+      )}
     </form>
   );
 }
@@ -307,68 +415,52 @@ const services = [
   },
 ];
 
+const pillars: [string, string][] = [
+  [
+    "Innovation",
+    "We listen, learn, and seek out the best ideas — attacking complacency at every turn.",
+  ],
+  [
+    "Quality",
+    "Doing it right the first time, every time — always striving to find a better way.",
+  ],
+  [
+    "Teamwork",
+    "Communicate and collaborate to succeed — together, we exceed expectations.",
+  ],
+];
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const aboutRef = useRef<HTMLElement>(null);
-  const contactRef = useRef<HTMLElement>(null);
-  const [aboutVisible, setAboutVisible] = useState(false);
-  const [contactVisible, setContactVisible] = useState(false);
+  const [openService, setOpenService] = useState(0);
+  const svcPanelRef = useRef<HTMLDivElement | null>(null);
+
+  // Marks that scripting is live, which is what arms the scroll reveals.
+  // Without it the CSS keeps every section fully visible, so the page still
+  // reads correctly if hydration never happens.
+  useEffect(() => {
+    document.documentElement.classList.add("vt-motion");
+  }, []);
+  const [svcPanelHeight, setSvcPanelHeight] = useState(0);
 
   useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
+    const el = svcPanelRef.current;
+    if (!el) {
+      setSvcPanelHeight(0);
+      return;
+    }
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const cards = grid.querySelectorAll<HTMLElement>(".vt-service-card");
-      cards.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty("--mouse-x", `${x}%`);
-        card.style.setProperty("--mouse-y", `${y}%`);
-      });
-    };
+    const measure = () => setSvcPanelHeight(el.scrollHeight);
+    measure();
 
-    grid.addEventListener("mousemove", handleMouseMove);
-    return () => grid.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [openService]);
 
-  useEffect(() => {
-    const section = aboutRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setAboutVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const section = contactRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setContactVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.18 },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+  const [servicesRef, servicesVisible] = useInView<HTMLElement>(0.12);
+  const [aboutRef, aboutVisible] = useInView<HTMLElement>(0.25);
+  const [contactRef, contactVisible] = useInView<HTMLElement>(0.18);
 
   return (
     <>
@@ -436,90 +528,92 @@ export default function Home() {
         </section>
 
         {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-        <section id="services" className="vt-services-wrap">
+        <section
+          id="services"
+          ref={servicesRef}
+          className={`vt-index-services ${servicesVisible ? "is-visible" : ""}`}
+        >
           <div className="vt-section">
-            <div className="vt-services-head">
-              <p className="vt-section-label">Services</p>
+            <div className="vt-index-head">
+              <p className="vt-index-kicker">Services /</p>
 
-              <h2 className="vt-h2 vt-services-title">
+              <h2 className="vt-index-title">
                 Technology solutions built to scale modern businesses.
               </h2>
 
-              <p className="vt-services-sub">
+              <p className="vt-index-sub">
                 We help organizations modernize operations, improve digital
                 efficiency, and accelerate growth through enterprise-grade
                 technology solutions.
               </p>
             </div>
 
-            <div className="vt-services-grid" ref={gridRef}>
-              {services.map((service, i) => (
-                <article
-                  key={service.title}
-                  className="vt-service-card"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <div className="vt-service-accent" />
-                  <div className="vt-service-icon-wrap">
-                    <svg
-                      className="vt-service-icon"
-                      viewBox="0 0 48 48"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+            <div className="vt-index-list">
+              {services.map((service, i) => {
+                const isOpen = openService === i;
+                return (
+                  <div
+                    key={service.title}
+                    className={`vt-svc-row ${isOpen ? "is-open" : ""}`}
+                    style={{ transitionDelay: `${i * 70}ms` }}
+                  >
+                    <button
+                      type="button"
+                      className="vt-svc-trigger"
+                      aria-expanded={isOpen}
+                      aria-controls={`svc-panel-${i}`}
+                      id={`svc-trigger-${i}`}
+                      onClick={() => setOpenService(isOpen ? -1 : i)}
                     >
-                      {serviceIcons[service.icon]}
-                    </svg>
-                  </div>
-                  <div className="vt-service-content">
-                    <h3 className="vt-service-heading">{service.title}</h3>
-                    <p className="vt-service-description">
-                      {service.description}
-                    </p>
-                    <div className="vt-service-points">
-                      {service.points.map((point) => (
-                        <div key={point} className="vt-service-point">
-                          <svg
-                            className="vt-service-check"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M3 8L6.5 11.5L13 4.5"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          {point}
+                      <span className="vt-svc-index">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="vt-svc-title">{service.title}</span>
+                      <span className="vt-svc-toggle" aria-hidden="true">
+                        {isOpen ? "−" : "+"}
+                      </span>
+                    </button>
+
+                    <div
+                      className={`vt-svc-panel-wrap ${isOpen ? "is-open" : ""}`}
+                      id={`svc-panel-${i}`}
+                      role="region"
+                      aria-labelledby={`svc-trigger-${i}`}
+                      style={{ maxHeight: isOpen ? svcPanelHeight : 0 }}
+                    >
+                      <div
+                        className="vt-svc-panel-content"
+                        ref={isOpen ? svcPanelRef : undefined}
+                      >
+                        <div>
+                          <p className="vt-svc-desc">{service.description}</p>
+                          <div className="vt-svc-points">
+                            {service.points.map((point) => (
+                              <div key={point} className="vt-svc-point">
+                                <span
+                                  className="vt-svc-point-mark"
+                                  aria-hidden="true"
+                                />
+                                {point}
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      ))}
+                        <svg
+                          className="vt-svc-watermark"
+                          viewBox="0 0 48 48"
+                          fill="none"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          {serviceIcons[service.icon]}
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </article>
-              ))}
+                );
+              })}
             </div>
-            <button
-              className="vt-service-btn"
-              onClick={() => scrollTo("#contact")}
-            >
-              Discuss Solution
-              <svg
-                className="vt-service-btn-arrow"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4 10H16M16 10L11 5M16 10L11 15"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </div>
         </section>
 
@@ -529,78 +623,71 @@ export default function Home() {
           ref={aboutRef}
           className={`vt-about-section ${aboutVisible ? "is-visible" : ""}`}
         >
+          <div className="vt-about-noise" aria-hidden="true" />
+          <div className="vt-about-glow" aria-hidden="true" />
+
+          {/* --------------Motion animation intentionally commented------------ */}
+          {/* <div className="vt-about-lines" aria-hidden="true">
+            {signalLines.map((line, i) => {
+              const d = wavePath(line.amplitude, line.cycles, line.phase);
+              return (
+                <svg
+                  key={i}
+                  className={`vt-signal-line ${line.bright ? "vt-signal-line-bright" : ""}`}
+                  style={{
+                    top: line.top,
+                    animationDuration: line.duration,
+                  }}
+                  viewBox={`0 0 ${SIGNAL_LINE_TILE_WIDTH * 2} ${SIGNAL_LINE_HEIGHT}`}
+                  preserveAspectRatio="none"
+                >
+                  <path d={d} />
+                  <path
+                    d={d}
+                    transform={`translate(${SIGNAL_LINE_TILE_WIDTH}, 0)`}
+                  />
+                </svg>
+              );
+            })}
+          </div> */}
+
           <div className="vt-about">
-            <div className="vt-about-frame">
-              <span
-                className="vt-about-orb vt-about-orb-left"
-                aria-hidden="true"
-              />
-              <span
-                className="vt-about-orb vt-about-orb-right"
-                aria-hidden="true"
-              />
+            <p className="vt-index-kicker">About Us /</p>
 
-              <div className="vt-about-header">
-                <p className="vt-section-label vt-about-label">About Us</p>
-                <h2 className="vt-h2 vt-h2-white">
-                  Collaborative{" "}
-                  <span className="vt-h2-ital">Transformation</span>
-                </h2>
-                <p className="vt-about-tagline">
-                  We believe that innovation is achieved through the right
-                  combination of meaningful relationships and technology.
-                </p>
-              </div>
+            <div className="vt-about-intro">
+              <h2 className="vt-about-headline">
+                Meaningful relationships, powered by technology.
+              </h2>
 
-              <div className="vt-about-grid">
-                <div className="vt-about-story">
-                  <p className="vt-about-copy">
-                    <strong className="vt-about-strong">
-                      Venmer Tech LLC{" "}
-                    </strong>{" "}
-                    is dedicated to achieve client&apos;s organizational goals
-                    through the most effective use of Information Technology and
-                    business vertical knowledge. Working as a business partner
-                    with you, we plan, prepare and execute programs with
-                    knowledge, experience and follow through while providing
-                    solutions in a timely manner. Our solutions are the outcome
-                    of the synergistic contribution of our most-valued
-                    resources. Our depth and breadth of service and global reach
-                    equips us to serve any client, anywhere across the globe.
-                  </p>
-                  <button
-                    className="vt-btn-outline-white"
-                    onClick={() => scrollTo("#contact")}
-                  >
-                    Work With Us →
-                  </button>
+              <p className="vt-about-copy">
+                <strong>Venmer Tech LLC </strong> partners with organizations
+                to achieve their goals through the effective use of
+                technology and business expertise — delivering solutions
+                with knowledge, experience, and follow-through.
+              </p>
+
+              <button
+                className="vt-btn-signal"
+                onClick={() => scrollTo("#contact")}
+              >
+                Work with us <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <div className="vt-pillars-strip">
+              {pillars.map(([title, desc], i) => (
+                <div
+                  key={title}
+                  className="vt-pillar-item"
+                  style={{ transitionDelay: `${i * 90}ms` }}
+                >
+                  <span className="vt-pillar-tag">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="vt-pillar-item-title">{title}</h3>
+                  <p className="vt-pillar-item-desc">{desc}</p>
                 </div>
-                <div className="vt-pillars">
-                  {[
-                    [
-                      "Innovation",
-                      "Innovation is the key to continued growth and relevance in the marketplace. At Venmer Tech, We listen, learn, and seek out the best ideas. We attack complacency and continually improve.",
-                    ],
-                    [
-                      "Quality",
-                      "Doing it right the first time — every time, Pace-setting and Innovative. Always striving to find a better way. We monitor and measure all parts of our business.",
-                    ],
-                    [
-                      "Teamwork",
-                      "Communicate and collaborate to succeed. We believe teamwork empowers our individual strengths and that working together as a team helps us exceed expectations.",
-                    ],
-                  ].map(([t, d], index) => (
-                    <article
-                      key={t}
-                      className="vt-pillar"
-                      style={{ transitionDelay: `${index * 120}ms` }}
-                    >
-                      <div className="vt-pillar-title">{t}</div>
-                      <div className="vt-pillar-desc">{d}</div>
-                    </article>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -613,67 +700,54 @@ export default function Home() {
         >
           <div className="vt-section vt-contact-shell">
             <div className="vt-contact-header">
-              <p className="vt-section-label">Contact</p>
-              <h2 className="vt-h2">Let&apos;s start a conversation.</h2>
+              <p className="vt-index-kicker">Contact /</p>
+              <h2 className="vt-h2-signal">Ready to transform your enterprise with AI-first solutions?</h2>
             </div>
 
-            <div className="vt-contact-panel">
-              <div className="vt-contact-grid">
-                <ContactForm />
-                <div className="vt-contact-info">
-                  {[
-                    {
-                      label: "Address",
-                      value: "2501 Lakeside Pkwy, Flower Mound, TX 75022-4180",
-                      href: undefined,
-                    },
-                    {
-                      label: "Call Us",
-                      value: "+1 (940) 240-6962",
-                      href: "tel:+19402406962",
-                    },
-                    {
-                      label: "Email Us",
-                      value: "info@venmertech.com",
-                      href: "mailto:info@venmertech.com",
-                    },
-                  ].map(({ label, value, href }, index) => (
-                    <div
-                      key={label}
-                      className="vt-info-item"
-                      style={{ transitionDelay: `${index * 110}ms` }}
-                    >
-                      <div className="vt-info-label">{label}</div>
-                      {href ? (
-                        <a href={href} className="vt-info-value">
-                          {value}
-                        </a>
-                      ) : (
-                        <p
-                          className="vt-info-value"
-                          style={{ whiteSpace: "pre-line" }}
-                        >
-                          {value}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
+            <div className="vt-contact-grid-signal">
+              <ContactForm />
+              <div className="vt-contact-data">
+                {[
+                  {
+                    label: "Address",
+                    value: "2501 Lakeside Pkwy, Flower Mound, TX 75022-4180",
+                    href: undefined,
+                  },
+                  {
+                    label: "Call Us",
+                    value: "+1 (940) 240-6962",
+                    href: "tel:+19402406962",
+                  },
+                  {
+                    label: "Email Us",
+                    value: "info@venmertech.com",
+                    href: "mailto:info@venmertech.com",
+                  },
+                ].map(({ label, value, href }, index) => (
+                  <div
+                    key={label}
+                    className="vt-data-row"
+                    style={{ transitionDelay: `${index * 90}ms` }}
+                  >
+                    <span className="vt-data-label">{label}</span>
+                    {href ? (
+                      <a href={href} className="vt-data-value">
+                        {value}
+                      </a>
+                    ) : (
+                      <span
+                        className="vt-data-value"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {value}
+                      </span>
+                    )}
+                    <span className="vt-data-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </div>
+                ))}
               </div>
-
-              {/* <div className="vt-map-card">
-                <div className="vt-map-topline">
-                  <span className="vt-map-badge">Office Map</span>
-                  <span className="vt-map-meta">Houston, TX</span>
-                </div>
-                <div className="vt-map">
-                  <iframe
-                    title="Office"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3464.4!2d-95.4535!3d29.7365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c3e1b1b1b1b1%3A0x0!2s1900+Yorktown+St%2C+Houston%2C+TX+77056!5e0!3m2!1sen!2sus!4v1680000000000"
-                    allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-              </div> */}
             </div>
           </div>
         </section>
