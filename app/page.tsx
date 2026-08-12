@@ -626,6 +626,7 @@ export default function Home() {
           <div className="vt-about-noise" aria-hidden="true" />
           <div className="vt-about-glow" aria-hidden="true" />
 
+          {/* --------------Motion animation intentionally commented------------ */}
           {/* <div className="vt-about-lines" aria-hidden="true">
             {signalLines.map((line, i) => {
               const d = wavePath(line.amplitude, line.cycles, line.phase);
