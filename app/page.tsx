@@ -119,7 +119,7 @@ function ContactForm() {
             id="cf-name"
             className="vt-input"
             name="name"
-            placeholder="Jordan Reyes"
+            placeholder="Enter your full name"
             value={form.name}
             onChange={handle}
             required
@@ -133,7 +133,7 @@ function ContactForm() {
             id="cf-email"
             className="vt-input"
             name="email"
-            placeholder="jordan@company.com"
+            placeholder="username@company.com"
             type="email"
             value={form.email}
             onChange={handle}
@@ -149,7 +149,7 @@ function ContactForm() {
           id="cf-company"
           className="vt-input"
           name="company"
-          placeholder="Acme Inc."
+          placeholder="Enter Company Name"
           value={form.company}
           onChange={handle}
         />
@@ -162,7 +162,7 @@ function ContactForm() {
           id="cf-message"
           className="vt-input vt-textarea"
           name="message"
-          placeholder="Tell us about your project…"
+          placeholder="Tell us about your inquiry"
           rows={5}
           value={form.message}
           onChange={handle}
@@ -415,23 +415,6 @@ const services = [
   },
 ];
 
-const capabilities = [
-  "Application Development",
-  "Cloud Services",
-  "Quality Assurance",
-  "Talent Acquisition",
-  "Cloud Modernization",
-  "Data & AI",
-  "Application Modernization",
-  "Managed Services",
-  "Solution Architecture",
-  "Executive Search",
-  "Healthcare",
-  "Retail & E-commerce",
-  "Manufacturing",
-  "Technology",
-];
-
 const pillars: [string, string][] = [
   [
     "Innovation",
@@ -541,28 +524,6 @@ export default function Home() {
           <div className="vt-scroll-indicator">
             <div className="vt-scroll-line" />
             <span>Scroll</span>
-          </div>
-        </section>
-
-        {/* ── SIGNAL BAND ───────────────────────────────────────────────────── */}
-        <section id="signal" className="vt-signal-band">
-          <div className="vt-marquee" aria-hidden="true">
-            <div className="vt-marquee-track vt-marquee-track--a">
-              {[...capabilities, ...capabilities].map((c, i) => (
-                <span className="vt-marquee-item" key={`a-${i}`}>
-                  {c}
-                  <span className="vt-marquee-dot">◆</span>
-                </span>
-              ))}
-            </div>
-            <div className="vt-marquee-track vt-marquee-track--b">
-              {[...capabilities, ...capabilities].reverse().map((c, i) => (
-                <span className="vt-marquee-item" key={`b-${i}`}>
-                  {c}
-                  <span className="vt-marquee-dot">◆</span>
-                </span>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -739,7 +700,7 @@ export default function Home() {
           <div className="vt-section vt-contact-shell">
             <div className="vt-contact-header">
               <p className="vt-index-kicker">Contact /</p>
-              <h2 className="vt-h2-signal">Let&apos;s start a conversation.</h2>
+              <h2 className="vt-h2-signal">Ready to transform your enterprise with AI-first solutions?</h2>
             </div>
 
             <div className="vt-contact-grid-signal">
