@@ -710,13 +710,13 @@ export default function Home() {
                 {[
                   {
                     label: "Address",
-                    value: "2501 Lakeside Pkwy, Flower Mound, TX 75022-4180",
+                    value: "5301 Alpha Road, Suite 80-14, Dallas, TX 75240",
                     href: undefined,
                   },
                   {
                     label: "Call Us",
-                    value: "+1 (940) 240-6962",
-                    href: "tel:+19402406962",
+                    value: "+1 (972) 823-9091",
+                    href: "tel:+19728239091",
                   },
                   {
                     label: "Email Us",
