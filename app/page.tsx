@@ -81,7 +81,7 @@ function ContactForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
   const API_BASE_URL =
-    process?.env?.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8787";
+    process?.env?.NEXT_PUBLIC_API_BASE_URL ?? "https://sendemail-api.falling-band-ce89.workers.dev";
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
