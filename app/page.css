@@ -1533,6 +1533,16 @@ section { scroll-margin-top: 5rem; }
   margin-top: -0.75rem;
 }
 
+.vt-input-error { border-color: var(--sig-error); }
+.vt-input-error:focus { border-color: var(--sig-error); }
+
+.vt-field-error {
+  position: relative;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--sig-error);
+}
+
 .vt-contact-data {
   display: flex;
   flex-direction: column;
