@@ -68,44 +68,115 @@ function ContactForm() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     message: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle",
-  );
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "sent" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
+  const API_BASE_URL =
+    process?.env?.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8787";
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
+    setFieldErrors({});
+    setErrorMessage("");
 
     try {
-      const workerUrl =
-        process?.env?.NEXT_PUBLIC_WORKER_URL ?? "http://127.0.0.1:8787";
-
-      const res = await fetch(workerUrl, {
+      const res = await fetch(`${API_BASE_URL}/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          fullName: form.name,
+          email: form.email,
+          phone: form.phone,
+          company: form.company,
+          message: form.message,
+        }),
       });
 
-      if (!res.ok) {
-        throw new Error(`Request failed (${res.status})`);
-      }
+      const data = await res.json();
 
-      // attempt to parse JSON response if present
-      try {
-        await res.json();
-      } catch {
-        // ignore parse errors — success indicated by HTTP status
-      }
+      switch (res.status) {
+        case 200:
+          setForm({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            message: "",
+          });
+          setStatus("sent");
+          break;
 
-      setStatus("sent");
-    } catch (err) {
-      console.error("Contact form submit error:", err);
+        case 400:
+          if (data?.error === "validation_failed") {
+            setStatus("error");
+            setErrorMessage("Please correct the highlighted fields.");
+            const details = (data?.details as Record<string, string>) ?? {};
+            const fieldMap: Record<string, string> = {
+              fullName: "name",
+              email: "email",
+              phone: "phone",
+              company: "company",
+              message: "message",
+            };
+            setFieldErrors(
+              Object.fromEntries(
+                Object.entries(details).map(([key, msg]) => [
+                  fieldMap[key] ?? key,
+                  String(msg),
+                ]),
+              ),
+            );
+          } else {
+            setStatus("error");
+            setErrorMessage(
+              "The request could not be read. Please try again.",
+            );
+          }
+          break;
+
+        case 403:
+          setStatus("error");
+          setErrorMessage(
+            data?.error === "recipient_not_allowed"
+              ? "This recipient is not accepted. Please try again later."
+              : "There is a configuration error on our end. Please try again later.",
+          );
+          break;
+
+        case 429:
+          setStatus("error");
+          setErrorMessage(
+            "Too many submissions. Please wait and try again later.",
+          );
+          break;
+
+        case 502:
+          setStatus("error");
+          setErrorMessage(
+            "Your message could not be sent. Please try again later.",
+          );
+          break;
+
+        default:
+          setStatus("error");
+          setErrorMessage(
+            "Something went wrong sending your message. Please try again.",
+          );
+      }
+    } catch {
       setStatus("error");
+      setErrorMessage(
+        "Something went wrong sending your message. Please try again.",
+      );
     }
   };
   return (
@@ -117,13 +188,19 @@ function ContactForm() {
           </label>
           <input
             id="cf-name"
-            className="vt-input"
+            className={`vt-input ${fieldErrors.name ? "vt-input-error" : ""}`}
             name="name"
             placeholder="Enter your full name"
             value={form.name}
             onChange={handle}
+            aria-invalid={!!fieldErrors.name}
             required
           />
+          {fieldErrors.name && (
+            <span className="vt-field-error" role="alert">
+              {fieldErrors.name}
+            </span>
+          )}
         </div>
         <div className="vt-field">
           <label className="vt-field-label" htmlFor="cf-email">
@@ -131,28 +208,63 @@ function ContactForm() {
           </label>
           <input
             id="cf-email"
-            className="vt-input"
+            className={`vt-input ${fieldErrors.email ? "vt-input-error" : ""}`}
             name="email"
             placeholder="username@company.com"
             type="email"
             value={form.email}
             onChange={handle}
+            aria-invalid={!!fieldErrors.email}
             required
           />
+          {fieldErrors.email && (
+            <span className="vt-field-error" role="alert">
+              {fieldErrors.email}
+            </span>
+          )}
         </div>
       </div>
-      <div className="vt-field">
-        <label className="vt-field-label" htmlFor="cf-company">
-          Company <span className="vt-field-optional">(optional)</span>
-        </label>
-        <input
-          id="cf-company"
-          className="vt-input"
-          name="company"
-          placeholder="Enter Company Name"
-          value={form.company}
-          onChange={handle}
-        />
+      <div className="vt-form-row">
+        <div className="vt-field">
+          <label className="vt-field-label" htmlFor="cf-phone">
+            Phone
+          </label>
+          <input
+            id="cf-phone"
+            className={`vt-input ${fieldErrors.phone ? "vt-input-error" : ""}`}
+            name="phone"
+            type="tel"
+            placeholder="+1 234 567 8900"
+            value={form.phone}
+            onChange={handle}
+            aria-invalid={!!fieldErrors.phone}
+            required
+          />
+          {fieldErrors.phone && (
+            <span className="vt-field-error" role="alert">
+              {fieldErrors.phone}
+            </span>
+          )}
+        </div>
+        <div className="vt-field">
+          <label className="vt-field-label" htmlFor="cf-company">
+            Company <span className="vt-field-optional">(optional)</span>
+          </label>
+          <input
+            id="cf-company"
+            className={`vt-input ${fieldErrors.company ? "vt-input-error" : ""}`}
+            name="company"
+            placeholder="Enter Company Name"
+            value={form.company}
+            onChange={handle}
+            aria-invalid={!!fieldErrors.company}
+          />
+          {fieldErrors.company && (
+            <span className="vt-field-error" role="alert">
+              {fieldErrors.company}
+            </span>
+          )}
+        </div>
       </div>
       <div className="vt-field">
         <label className="vt-field-label" htmlFor="cf-message">
@@ -160,14 +272,22 @@ function ContactForm() {
         </label>
         <textarea
           id="cf-message"
-          className="vt-input vt-textarea"
+          className={`vt-input vt-textarea ${
+            fieldErrors.message ? "vt-input-error" : ""
+          }`}
           name="message"
           placeholder="Tell us about your inquiry"
           rows={5}
           value={form.message}
           onChange={handle}
+          aria-invalid={!!fieldErrors.message}
           required
         />
+        {fieldErrors.message && (
+          <span className="vt-field-error" role="alert">
+            {fieldErrors.message}
+          </span>
+        )}
       </div>
       <button
         type="submit"
@@ -201,7 +321,7 @@ function ContactForm() {
 
       {status === "error" && (
         <p className="vt-form-error" role="alert">
-          Something went wrong sending your message. Please try again.
+          {errorMessage}
         </p>
       )}
     </form>
