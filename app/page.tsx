@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import {
+  AsYouType,
+  getCountryCallingCode,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+  type CountryCode,
+} from "libphonenumber-js";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { scrollTo } from "./components/nav-data";
+import { PHONE_COUNTRIES } from "./components/phone-data";
 import "./page.css";
 
 const SIGNAL_LINE_TILE_WIDTH = 600;
@@ -64,6 +72,21 @@ function useInView<T extends HTMLElement>(threshold = 0.2) {
   return [ref, visible] as const;
 }
 
+// Base URL of the transactional-email API. Comes from NEXT_PUBLIC_API_BASE_URL
+// (see .env.example) and is inlined at build time — this site is a static export,
+// so it must be defined wherever `next build` runs. There is no hardcoded fallback.
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const DEFAULT_PHONE_COUNTRY: CountryCode = "US";
+const INVALID_PHONE_MESSAGE =
+  "Enter a valid phone number for the selected country.";
+
+function phoneErrorFor(value: string, country: CountryCode): string {
+  if (!value.trim()) return "Phone number is required.";
+  if (!isValidPhoneNumber(value, country)) return INVALID_PHONE_MESSAGE;
+  return "";
+}
+
 function ContactForm() {
   const [form, setForm] = useState({
     name: "",
@@ -72,6 +95,9 @@ function ContactForm() {
     company: "",
     message: "",
   });
+  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(
+    DEFAULT_PHONE_COUNTRY,
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<
     "idle" | "sending" | "sent" | "error"
@@ -80,10 +106,62 @@ function ContactForm() {
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
-  const API_BASE_URL =
-    process?.env?.NEXT_PUBLIC_API_BASE_URL ?? "https://sendemail-api.falling-band-ce89.workers.dev";
+
+  const clearPhoneError = () => {
+    if (fieldErrors.phone) {
+      setFieldErrors((fe) => ({ ...fe, phone: "" }));
+    }
+  };
+
+  const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextRaw = e.target.value;
+    // While the visitor is deleting, leave their edit alone — re-running the
+    // formatter on a shrinking string fights the caret.
+    const next =
+      nextRaw.length < form.phone.length
+        ? nextRaw
+        : new AsYouType(phoneCountry).input(nextRaw);
+    setForm((f) => ({ ...f, phone: next }));
+    clearPhoneError();
+  };
+
+  const handlePhoneCountry = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const country = e.target.value as CountryCode;
+    setPhoneCountry(country);
+    setForm((f) => ({
+      ...f,
+      phone: f.phone ? new AsYouType(country).input(f.phone) : "",
+    }));
+    clearPhoneError();
+  };
+
+  // Flag a badly formed number once the visitor leaves the field; an empty
+  // field only becomes an error on submit.
+  const handlePhoneBlur = () => {
+    if (form.phone.trim() && !isValidPhoneNumber(form.phone, phoneCountry)) {
+      setFieldErrors((fe) => ({ ...fe, phone: INVALID_PHONE_MESSAGE }));
+    }
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const phoneError = phoneErrorFor(form.phone, phoneCountry);
+    if (phoneError) {
+      setStatus("error");
+      setErrorMessage("Please correct the highlighted fields.");
+      setFieldErrors({ phone: phoneError });
+      return;
+    }
+
+    if (!API_BASE_URL) {
+      setStatus("error");
+      setErrorMessage(
+        "The contact form isn't configured right now. Please email us at info@venmertech.com.",
+      );
+      return;
+    }
+
     setStatus("sending");
     setFieldErrors({});
     setErrorMessage("");
@@ -95,7 +173,7 @@ function ContactForm() {
         body: JSON.stringify({
           fullName: form.name,
           email: form.email,
-          phone: form.phone,
+          phone: parsePhoneNumber(form.phone, phoneCountry).number,
           company: form.company,
           message: form.message,
         }),
@@ -229,19 +307,49 @@ function ContactForm() {
           <label className="vt-field-label" htmlFor="cf-phone">
             Phone
           </label>
-          <input
-            id="cf-phone"
-            className={`vt-input ${fieldErrors.phone ? "vt-input-error" : ""}`}
-            name="phone"
-            type="tel"
-            placeholder="+1 234 567 8900"
-            value={form.phone}
-            onChange={handle}
-            aria-invalid={!!fieldErrors.phone}
-            required
-          />
+          <div
+            className={`vt-phone ${fieldErrors.phone ? "vt-input-error" : ""}`}
+          >
+            <select
+              className="vt-phone-country"
+              aria-label="Country"
+              autoComplete="tel-country-code"
+              value={phoneCountry}
+              onChange={handlePhoneCountry}
+            >
+              {PHONE_COUNTRIES.map((country) => (
+                <option key={country.code} value={country.code}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+            <span className="vt-phone-dial">
+              +{getCountryCallingCode(phoneCountry)}
+            </span>
+            <input
+              id="cf-phone"
+              className="vt-phone-number"
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel-national"
+              placeholder="Phone number"
+              value={form.phone}
+              onChange={handlePhone}
+              onBlur={handlePhoneBlur}
+              aria-invalid={!!fieldErrors.phone}
+              aria-describedby={
+                fieldErrors.phone ? "cf-phone-error" : undefined
+              }
+              required
+            />
+          </div>
           {fieldErrors.phone && (
-            <span className="vt-field-error" role="alert">
+            <span
+              className="vt-field-error"
+              id="cf-phone-error"
+              role="alert"
+            >
               {fieldErrors.phone}
             </span>
           )}
