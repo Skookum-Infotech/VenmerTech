@@ -1430,7 +1430,10 @@ section { scroll-margin-top: 5rem; }
 
 .vt-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
 
-.vt-field { position: relative; display: flex; flex-direction: column; gap: 0.65rem; }
+/* min-width:0 so a field never forces its grid column wider than its half —
+   the phone field's <select> has a wide intrinsic size that would otherwise
+   push the two-column row out of balance. */
+.vt-field { position: relative; display: flex; flex-direction: column; gap: 0.65rem; min-width: 0; }
 
 /* Focus draws a lime rule across the field instead of just recolouring it. */
 .vt-field::after {
@@ -1480,6 +1483,70 @@ section { scroll-margin-top: 5rem; }
 .vt-input:focus { border-color: var(--sig-lime); }
 
 .vt-textarea { resize: vertical; min-height: 120px; }
+
+/* Phone field — country <select>, the dial code, and the national-number input
+   sit on one shared underline so they read as a single control. */
+.vt-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  border-bottom: 1px solid var(--sig-line-strong);
+  transition: border-color var(--dur-response) var(--ease-signal);
+}
+
+.vt-phone:focus-within { border-color: var(--sig-lime); }
+.vt-phone.vt-input-error { border-color: var(--sig-error); }
+
+.vt-phone-country,
+.vt-phone-dial,
+.vt-phone-number {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  /* Matched metrics so the <select>, the dial code, and the <input> are the exact
+     same height — otherwise the native select is ~2px taller and drags the shared
+     underline out of line with the field beside it. */
+  line-height: 1.25;
+  color: var(--sig-text);
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0.6rem 0;
+  outline: none;
+}
+
+.vt-phone-number {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.vt-phone-number::placeholder { color: var(--sig-dim2); }
+
+.vt-phone-dial {
+  flex: 0 0 auto;
+  color: var(--sig-dim);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.vt-phone-country {
+  flex: 0 1 auto;
+  max-width: 46%;
+  padding-right: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Drop the native select chrome so it reads as flat text like the other
+     fields, then draw a minimal chevron of our own. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%230d0d0d' stroke-opacity='.55' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.1rem center;
+  background-size: 0.62rem auto;
+}
 
 .vt-btn-primary {
   align-self: flex-start;
