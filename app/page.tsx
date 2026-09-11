@@ -143,6 +143,14 @@ function ContactForm() {
     }
   };
 
+  // This site's delivery config, sent in the request body (the SendEmail
+  // Worker only checks the Origin; venmertech.com owns where its enquiries
+  // go and the identity they're sent as). All three are NEXT_PUBLIC_
+  // (inlined at build) and must be set wherever the site builds.
+  const TO_EMAIL = process.env.NEXT_PUBLIC_CONTACT_TO_EMAIL;
+  const FROM_EMAIL = process.env.NEXT_PUBLIC_CONTACT_FROM_EMAIL;
+  const FROM_NAME = process.env.NEXT_PUBLIC_CONTACT_FROM_NAME;
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -154,10 +162,11 @@ function ContactForm() {
       return;
     }
 
-    if (!API_BASE_URL) {
+    if (!API_BASE_URL || !TO_EMAIL || !FROM_EMAIL || !FROM_NAME) {
+      console.error("ContactForm: SendEmail env vars are not fully configured");
       setStatus("error");
       setErrorMessage(
-        "The contact form isn't configured right now. Please email us at info@venmertech.com.",
+        "There is a configuration error on our end. Please try again later.",
       );
       return;
     }
@@ -176,6 +185,9 @@ function ContactForm() {
           phone: parsePhoneNumber(form.phone, phoneCountry).number,
           company: form.company,
           message: form.message,
+          toEmail: TO_EMAIL,
+          fromEmail: FROM_EMAIL,
+          fromName: FROM_NAME,
         }),
       });
 
