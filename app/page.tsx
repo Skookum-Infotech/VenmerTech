@@ -80,10 +80,24 @@ function ContactForm() {
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
-  const API_BASE_URL =
-    process?.env?.NEXT_PUBLIC_API_BASE_URL ?? "https://sendemail-api.falling-band-ce89.workers.dev";
+  // Endpoint + this site's delivery config. The SendEmail Worker only checks
+  // the Origin; venmertech.com owns where its enquiries go and the identity
+  // they're sent as, so those travel in the request body. All four are
+  // NEXT_PUBLIC_ (inlined at build) and must be set wherever the site builds.
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const TO_EMAIL = process.env.NEXT_PUBLIC_CONTACT_TO_EMAIL;
+  const FROM_EMAIL = process.env.NEXT_PUBLIC_CONTACT_FROM_EMAIL;
+  const FROM_NAME = process.env.NEXT_PUBLIC_CONTACT_FROM_NAME;
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!API_BASE_URL || !TO_EMAIL || !FROM_EMAIL || !FROM_NAME) {
+      console.error("ContactForm: SendEmail env vars are not fully configured");
+      setStatus("error");
+      setErrorMessage("There is a configuration error on our end. Please try again later.");
+      return;
+    }
+
     setStatus("sending");
     setFieldErrors({});
     setErrorMessage("");
@@ -98,6 +112,9 @@ function ContactForm() {
           phone: form.phone,
           company: form.company,
           message: form.message,
+          toEmail: TO_EMAIL,
+          fromEmail: FROM_EMAIL,
+          fromName: FROM_NAME,
         }),
       });
 
